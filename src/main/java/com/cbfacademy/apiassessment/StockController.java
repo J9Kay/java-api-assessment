@@ -4,6 +4,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/stocks")
 public class StockController {
@@ -33,8 +35,19 @@ public class StockController {
         } catch (StockNotFoundException e) {
             return ResponseEntity.notFound().build();
         }
+
+
+
     }
 
+    @GetMapping
+    public ResponseEntity<List<Stock>> getAllStocks() {
+        List<Stock> stocks = stockService.getAllStocks();
+        if (stocks.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.ok(stocks);
+    }
 
 
 

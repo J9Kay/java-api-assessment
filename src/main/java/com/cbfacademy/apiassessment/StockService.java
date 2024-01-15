@@ -1,7 +1,9 @@
 package com.cbfacademy.apiassessment;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -12,6 +14,11 @@ public class StockService {
     public StockService() {
         stockMap = new HashMap<>();
     }
+
+    public List<Stock> getAllStocks() {
+        return new ArrayList<>(stockMap.values());
+    }
+
 
     public void addStock(Stock stock) {
         stockMap.put(stock.getTicker(), stock);
