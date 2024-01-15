@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class StockTest {
+public class StockTests {
     @Test
     @DisplayName("Check stock is created with all fields")
     public void testStockCreation() {
