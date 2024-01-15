@@ -25,6 +25,18 @@ public class StockController {
         }
     }
 
+    @GetMapping("/{ticker}")
+    public ResponseEntity<Stock> getStock(@PathVariable String ticker) {
+        try {
+            Stock stock = stockService.getStock(ticker);
+            return ResponseEntity.ok(stock);
+        } catch (StockNotFoundException e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+
+
 
 }
 

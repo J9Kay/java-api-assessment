@@ -1,13 +1,17 @@
 package com.cbfacademy.apiassessment;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Stock {
-    private final String ticker;
-    private final String name;
-    private final String currencySymbol;
+    private String ticker;
+    private String name;
+    private String currencySymbol;
     private double price;  // Current market price
     private int quantity;  // Number of shares owned
     private double purchasePrice;  // Average purchase price
 
+    // No-argument constructor
+    public Stock() {
+    }
 
     //constructor for generating a stock
     public Stock(String ticker, String name, String currencySymbol, double price, int quantity, double purchasePrice) {
