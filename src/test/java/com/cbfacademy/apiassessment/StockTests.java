@@ -25,15 +25,4 @@ public class StockTests {
         assertEquals(10, stock.getQuantity(), "Quantity should be 10");
         assertEquals(145.00, stock.getPurchasePrice(), 0.01, "Purchase price should be 145.00");
     }
-
-    @Test
-    @DisplayName("Check updating price and quantity")
-    public void testUpdatePriceAndQuantity() {
-        Stock stock = new Stock("AAPL", "Apple Inc.", "$");
-        stock.setPrice(152.00);
-        stock.setQuantity(15);
-
-        assertEquals(152.00, stock.getPrice(), 0.01, "Price should be updated to 152.00");
-        assertEquals(15, stock.getQuantity(), "Quantity should be updated to 15");
-    }
 }

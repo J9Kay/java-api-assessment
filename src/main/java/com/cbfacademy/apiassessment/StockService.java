@@ -26,17 +26,6 @@ public class StockService {
         stockMap.remove(ticker);
     }
 
-    public double calculateTotalPortfolioValue() {
-        return stockMap.values().stream()
-                .mapToDouble(stock -> stock.getPrice() * stock.getQuantity())
-                .sum();
-    }
 
-    public double calculateROI(String ticker) {
-        Stock stock = getStock(ticker);
-        double purchaseTotal = stock.getPurchasePrice() * stock.getQuantity();
-        double currentTotal = stock.getPrice() * stock.getQuantity();
-        return (currentTotal - purchaseTotal) / purchaseTotal * 100;
-    }
 
 }

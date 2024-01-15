@@ -8,8 +8,6 @@ public class Stock {
     private int quantity;  // Number of shares owned
     private double purchasePrice;  // Average purchase price
 
-    //constructor for generating a stock
-
 
     //constructor for generating a stock
     public Stock(String ticker, String name, String currencySymbol, double price, int quantity, double purchasePrice) {
