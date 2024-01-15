@@ -4,6 +4,7 @@ import java.util.Map;
 public class StockService {
     private Map<String, Stock> stockMap;
 
+    // store data so that it is unique and can be quickly retrived
     public StockService() {
         stockMap = new HashMap<>();
     }
@@ -17,6 +18,13 @@ public class StockService {
             throw new StockNotFoundException("Stock with ticker " + ticker + " not found");
         }
         return stockMap.get(ticker);
+    }
+
+    public void updateStock(String ticker, Stock updatedStock) {
+        if (!stockMap.containsKey(ticker)) {
+            throw new StockNotFoundException("Stock with ticker " + ticker + " not found");
+        }
+        stockMap.put(ticker, updatedStock);
     }
 
     public void deleteStock(String ticker) {
