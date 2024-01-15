@@ -1,10 +1,14 @@
 package com.cbfacademy.apiassessment;
+import org.springframework.stereotype.Service;
+
 import java.util.HashMap;
 import java.util.Map;
+
+@Service
 public class StockService {
     private Map<String, Stock> stockMap;
 
-    // store data so that it is unique and can be quickly retrived
+    // store data so that it is unique and can be quickly retrieved
     public StockService() {
         stockMap = new HashMap<>();
     }
