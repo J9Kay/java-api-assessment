@@ -16,20 +16,22 @@ public class Stock {
     }
 
     //constructor for generating a stock
-    public Stock(String ticker, String name, String currencySymbol, double price, int quantity, double purchasePrice) {
+    public Stock(String ticker, String name, String currencySymbol, String industry, double price, int quantity, double purchasePrice) {
         this.ticker = ticker;
         this.name = name;
         this.currencySymbol = currencySymbol;
+        this.industry = industry;
         this.price = price;
         this.quantity = quantity;
         this.purchasePrice = purchasePrice;
     }
 
     // 
-    public Stock(String ticker, String name, String currencySymbol) {
+    public Stock(String ticker, String name, String currencySymbol, String industry) {
         this.ticker = ticker;
         this.name = name;
         this.currencySymbol = currencySymbol;
+        this.industry= industry;
     }
 
     // 
@@ -49,6 +51,10 @@ public class Stock {
         return price;
     }
 
+    public String getIndustry() {
+        return industry;
+    }
+
     public int getQuantity() {
         return quantity;
     }
@@ -56,6 +62,7 @@ public class Stock {
     public double getPurchasePrice() {
         return purchasePrice;
     }
+
 
     // Setters for mutable fields
     public void setPrice(double price) {

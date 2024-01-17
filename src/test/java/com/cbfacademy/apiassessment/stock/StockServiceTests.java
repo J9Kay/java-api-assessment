@@ -12,7 +12,7 @@ public class StockServiceTests {
     @DisplayName("Check retrieving a stock by ticker")
     public void testGetStock() {
         StockService service = new StockService();
-        service.addStock(new Stock("AAPL", "Apple Inc.", "$", 150.50, 10, 145.00));
+        service.addStock(new Stock("AAPL", "Apple Inc.", "$",  "tech", 150.50, 10, 145.00));
 
         Stock stock = service.getStock("AAPL");
         assertNotNull(stock, "Stock AAPL should be retrievable");

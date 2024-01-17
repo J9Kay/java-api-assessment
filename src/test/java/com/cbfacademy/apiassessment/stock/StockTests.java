@@ -11,7 +11,7 @@ public class StockTests {
     @DisplayName("Check stock is created with all fields")
     public void testStockCreation() {
         // Assuming the constructor only sets the final fields
-        Stock stock = new Stock("AAPL", "Apple Inc.", "$");
+        Stock stock = new Stock("AAPL", "Apple Inc.", "$", "tech");
 
         // Set mutable fields
         stock.setPrice(150.50);
@@ -22,6 +22,7 @@ public class StockTests {
         assertEquals("AAPL", stock.getTicker(), "Ticker should be AAPL");
         assertEquals("Apple Inc.", stock.getName(), "Name should be Apple Inc.");
         assertEquals("$", stock.getCurrencySymbol(), "Currency symbol should be $");
+        assertEquals("tech", stock.getIndustry(), "Industry should be tech");
         assertEquals(150.50, stock.getPrice(), 0.01, "Price should be 150.50");
         assertEquals(10, stock.getQuantity(), "Quantity should be 10");
         assertEquals(145.00, stock.getPurchasePrice(), 0.01, "Purchase price should be 145.00");
