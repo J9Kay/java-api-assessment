@@ -17,7 +17,7 @@ public class StockController {
         this.stockService = stockService;
     }
 
-    @PostMapping("/add")
+    @PostMapping
     public ResponseEntity<String> addStock(@RequestBody Stock stock) {
         try {
             stockService.addStock(stock);

@@ -23,14 +23,14 @@ public class Stock {
         this.purchasePrice = purchasePrice;
     }
 
-    // Constructor for immutable fields
+    // 
     public Stock(String ticker, String name, String currencySymbol) {
         this.ticker = ticker;
         this.name = name;
         this.currencySymbol = currencySymbol;
     }
 
-    // Getters for all fields
+    // 
     public String getTicker() {
         return ticker;
     }
