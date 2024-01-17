@@ -1,5 +1,6 @@
-package com.cbfacademy.apiassessment.core;
+package com.cbfacademy.apiassessment.stock;
 
+import com.cbfacademy.apiassessment.core.Repository;
 import com.cbfacademy.apiassessment.stock.Stock;
 
 import java.io.Serializable;
