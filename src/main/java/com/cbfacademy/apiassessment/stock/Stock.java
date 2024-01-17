@@ -1,4 +1,4 @@
-package com.cbfacademy.apiassessment;
+package com.cbfacademy.apiassessment.stock;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Stock {

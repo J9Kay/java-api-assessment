@@ -1,4 +1,4 @@
-package com.cbfacademy.apiassessment;
+package com.cbfacademy.apiassessment.stock;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;

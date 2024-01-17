@@ -1,4 +1,4 @@
-package com.cbfacademy.apiassessment;
+package com.cbfacademy.apiassessment.stock;
 
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.ResponseEntity;

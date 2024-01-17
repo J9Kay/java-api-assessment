@@ -1,5 +1,7 @@
-package com.cbfacademy.apiassessment;
+package com.cbfacademy.apiassessment.stock;
 
+import com.cbfacademy.apiassessment.stock.Stock;
+import com.cbfacademy.apiassessment.stock.StockService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
