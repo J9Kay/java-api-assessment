@@ -5,6 +5,8 @@ public class Stock {
     private String ticker;
     private String name;
     private String currencySymbol;
+
+    private String industry;
     private double price;  // Current market price
     private int quantity;  // Number of shares owned
     private double purchasePrice;  // Average purchase price
