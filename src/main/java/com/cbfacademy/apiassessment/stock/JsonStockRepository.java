@@ -8,15 +8,14 @@ import org.springframework.stereotype.Repository;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Repository
 public class JsonStockRepository implements StockRepository {
     private final String filepath;
     private final ObjectMapper objectMapper;
-    private final Map<Stock, String> database;
+    private final Map<String, Stock> database;
 
     public JsonStockRepository(@Value("${json.file.path}") String filepath) {
         this.filepath = filepath;
@@ -24,63 +23,72 @@ public class JsonStockRepository implements StockRepository {
         this.database = loadDataFromJson();
     }
 
-    private Map<Stock, String> loadDataFromJson() {
+    private Map<String, Stock> loadDataFromJson() {
         File file = new File(filepath);
         try {
             if (file.exists()) {
-                return objectMapper.readValue(file, new TypeReference<Map<Stock, String>>() {
-                });
+                return objectMapper.readValue(file, new TypeReference<>() {});
             }
-
         } catch (IOException e) {
             throw new PersistenceException("Failed to load data from JSON", e);
-
         }
         return new HashMap<>();
     }
 
-    // Save the state to JSON
     private void saveDataToJson() {
         try {
             objectMapper.writeValue(new File(filepath), database);
         } catch (IOException e) {
             throw new PersistenceException("Failed to save data to JSON", e);
         }
-
     }
 
     @Override
     public List<Stock> retrieveAll() throws PersistenceException {
-        return null;
+        return new ArrayList<>(database.values());
     }
 
     @Override
-    public Stock findById(String s) {
-        return null;
+    public Stock findById(String ticker) throws PersistenceException {
+        return database.get(ticker);
     }
 
     @Override
-    public Stock save(Stock entity) throws IllegalArgumentException, PersistenceException {
-        return null;
+    public Stock save(Stock stock) throws IllegalArgumentException, PersistenceException {
+        database.put(stock.getTicker(), stock);
+        saveDataToJson();
+        return stock;
     }
 
     @Override
-    public void delete(String s) throws IllegalArgumentException, PersistenceException {
-
+    public void delete(String ticker) throws IllegalArgumentException, PersistenceException {
+        if (database.remove(ticker) == null) {
+            throw new IllegalArgumentException("Stock not found: " + ticker);
+        }
+        saveDataToJson();
     }
 
     @Override
-    public Stock update(Stock entity) throws IllegalArgumentException, PersistenceException {
-        return null;
+    public Stock update(Stock stock) throws IllegalArgumentException, PersistenceException {
+        if (!database.containsKey(stock.getTicker())) {
+            throw new IllegalArgumentException("Stock not found: " + stock.getTicker());
+        }
+        database.put(stock.getTicker(), stock);
+        saveDataToJson();
+        return stock;
     }
 
     @Override
     public List<Stock> searchByTicker(String ticker) {
-        return null;
+        return database.values().stream()
+                .filter(stock -> stock.getTicker().equals(ticker))
+                .collect(Collectors.toList());
     }
 
     @Override
     public List<Stock> searchByIndustry(String industry) {
-        return null;
+        return database.values().stream()
+                .filter(stock -> stock.getIndustry().equals(industry))
+                .collect(Collectors.toList());
     }
 }
