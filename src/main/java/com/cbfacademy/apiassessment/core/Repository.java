@@ -30,7 +30,7 @@ public interface Repository<T, ID extends Serializable> {
      * @throws PersistenceException if there is an issue with the persistence layer
      */
 
-    void delete(T id) throws IllegalArgumentException, PersistenceException;
+    void delete(ID id) throws IllegalArgumentException, PersistenceException;
 
     /**
      * Updates an existing entity in the repository.
