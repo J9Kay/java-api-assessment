@@ -1,9 +1,7 @@
 package com.cbfacademy.apiassessment.stock;
 
 import com.cbfacademy.apiassessment.core.Repository;
-import com.cbfacademy.apiassessment.stock.Stock;
 
-import java.io.Serializable;
 import java.util.List;
 /**
  * The StockRepository interface defines the operations for managing Stocks in the system.
