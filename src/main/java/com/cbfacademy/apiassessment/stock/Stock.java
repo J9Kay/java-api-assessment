@@ -1,13 +1,12 @@
 package com.cbfacademy.apiassessment.stock;
-import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Stock {
     private String ticker;
     private String name;
     private String currencySymbol;
 
-    private String industry;
-    private double price;  // Current market price
+    private String sector;
+    private double currentPrice;  // Current market price
     private int quantity;  // Number of shares owned
     private double purchasePrice;  // Average purchase price
 
@@ -16,22 +15,22 @@ public class Stock {
     }
 
     //constructor for generating a stock
-    public Stock(String ticker, String name, String currencySymbol, String industry, double price, int quantity, double purchasePrice) {
+    public Stock(String ticker, String name, String currencySymbol, String sector, double currentPrice, int quantity, double purchasePrice) {
         this.ticker = ticker;
         this.name = name;
         this.currencySymbol = currencySymbol;
-        this.industry = industry;
-        this.price = price;
+        this.sector = sector;
+        this.currentPrice = currentPrice;
         this.quantity = quantity;
         this.purchasePrice = purchasePrice;
     }
 
     // 
-    public Stock(String ticker, String name, String currencySymbol, String industry) {
+    public Stock(String ticker, String name, String currencySymbol, String sector) {
         this.ticker = ticker;
         this.name = name;
         this.currencySymbol = currencySymbol;
-        this.industry= industry;
+        this.sector= sector;
     }
 
     // 
@@ -47,12 +46,12 @@ public class Stock {
         return currencySymbol;
     }
 
-    public double getPrice() {
-        return price;
+    public double getCurrentPrice() {
+        return currentPrice;
     }
 
-    public String getIndustry() {
-        return industry;
+    public String getSector() {
+        return sector;
     }
 
     public int getQuantity() {
@@ -65,8 +64,8 @@ public class Stock {
 
 
     // Setters for mutable fields
-    public void setPrice(double price) {
-        this.price = price;
+    public void setCurrentPrice(double currentPrice) {
+        this.currentPrice = currentPrice;
     }
 
     public void setQuantity(int quantity) {

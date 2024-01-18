@@ -27,9 +27,11 @@ public class JsonStockRepository implements StockRepository {
         File file = new File(filepath);
         try {
             if (file.exists()) {
-                return objectMapper.readValue(file, new TypeReference<>() {});
+                return objectMapper.readValue(file, new TypeReference<Map<String, Stock>>() {});
+
             }
         } catch (IOException e) {
+            e.printStackTrace(); // Or use a logger if available
             throw new PersistenceException("Failed to load data from JSON", e);
         }
         return new HashMap<>();
@@ -86,9 +88,9 @@ public class JsonStockRepository implements StockRepository {
     }
 
     @Override
-    public List<Stock> searchByIndustry(String industry) {
+    public List<Stock> searchBySector(String sector) {
         return database.values().stream()
-                .filter(stock -> stock.getIndustry().equals(industry))
+                .filter(stock -> stock.getSector().equals(sector))
                 .collect(Collectors.toList());
     }
 }

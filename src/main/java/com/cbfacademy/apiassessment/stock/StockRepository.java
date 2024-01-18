@@ -20,12 +20,12 @@ public interface StockRepository extends Repository<Stock,String > {
     List<Stock> searchByTicker(String ticker);
 
     /**
-     * Searches for Stocks where the industry name matches the provided string.
+     * Searches for Stocks where the sector name matches the provided string.
      *
-     * @param industry the name of the industry of the stock
-     * @return a list of Stocks that match the industry name
+     * @param sector the name of the sector of the stock
+     * @return a list of Stocks that match the sector name
      */
-    List<Stock> searchByIndustry(String industry);
+    List<Stock> searchBySector(String sector);
 
 
 

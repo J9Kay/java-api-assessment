@@ -1,14 +1,27 @@
-[
-  {"ticker": "AAPL", "name": "Apple Inc.", "sector": "Technology", "purchasePrice": 120.50, "quantity": 10, "currentPrice": 130.75, "currencySymbol": "$"},
-  {"ticker": "MSFT", "name": "Microsoft Corporation", "sector": "Technology", "purchasePrice": 210.40, "quantity": 5, "currentPrice": 220.60, "currencySymbol": "$"},
-  {"ticker": "AMZN", "name": "Amazon.com, Inc.", "sector": "Consumer Goods", "purchasePrice": 3100.00, "quantity": 2, "currentPrice": 3205.50, "currencySymbol": "$"},
-  {"ticker": "GOOGL", "name": "Alphabet Inc.", "sector": "Technology", "purchasePrice": 1820.75, "quantity": 3, "currentPrice": 1902.30, "currencySymbol": "$"},
-  {"ticker": "FB", "name": "Facebook, Inc.", "sector": "Technology", "purchasePrice": 270.10, "quantity": 15, "currentPrice": 275.50, "currencySymbol": "$"},
-  {"ticker": "TSLA", "name": "Tesla, Inc.", "sector": "Automotive", "purchasePrice": 650.80, "quantity": 8, "currentPrice": 700.30, "currencySymbol": "$"},
-  {"ticker": "BRK.A", "name": "Berkshire Hathaway Inc.", "sector": "Financial Services", "purchasePrice": 350000.00, "quantity": 1, "currentPrice": 355000.00, "currencySymbol": "$"},
-  {"ticker": "V", "name": "Visa Inc.", "sector": "Financial Services", "purchasePrice": 200.35, "quantity": 12, "currentPrice": 205.40, "currencySymbol": "$"},
-  {"ticker": "JNJ", "name": "Johnson & Johnson", "sector": "Healthcare", "purchasePrice": 150.25, "quantity": 20, "currentPrice": 155.50, "currencySymbol": "$"},
-  {"ticker": "WMT", "name": "Walmart Inc.", "sector": "Retail", "purchasePrice": 140.60, "quantity": 25, "currentPrice": 145.20, "currencySymbol": "$"},
-  {"ticker": "PG", "name": "Procter & Gamble", "sector": "Consumer Goods", "purchasePrice": 125.30, "quantity": 30, "currentPrice": 130.00, "currencySymbol": "$"},
-  {"ticker": "JPM", "name": "JPMorgan Chase & Co.", "sector": "Financial Services", "purchasePrice": 125.50, "quantity": 18, "currentPrice": 130.45, "currencySymbol":  "$"}
-]
+
+{
+"AAPL": {
+"name": "Apple Inc.",
+"sector": "Technology",
+"purchasePrice": 120.50,
+"quantity": 10,
+"currentPrice": 130.75,
+"currencySymbol": "$"
+},
+"MSFT": {
+"name": "Microsoft Corporation",
+"sector": "Technology",
+"purchasePrice": 210.40,
+"quantity": 5,
+"currentPrice": 220.60,
+"currencySymbol": "$"
+},
+"AMZN": {
+"name": "Amazon.com, Inc.",
+"sector": "Consumer Goods",
+"purchasePrice": 3100.00,
+"quantity": 2,
+"currentPrice": 3205.50,
+"currencySymbol": "$"
+}
+}
