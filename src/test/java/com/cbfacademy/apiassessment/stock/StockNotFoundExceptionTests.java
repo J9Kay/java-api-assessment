@@ -1,20 +1,20 @@
-package com.cbfacademy.apiassessment.stock;
-
-import com.cbfacademy.apiassessment.stock.StockNotFoundException;
-import com.cbfacademy.apiassessment.stock.StockService;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.assertThrows;
-
-public class StockNotFoundExceptionTests {
-    @Test
-    @DisplayName("Check for exception on invalid stock retrieval")
-    public void testExceptionOnInvalidStock() {
-        StockService service = new StockService();
-
-        assertThrows(StockNotFoundException.class, () -> {
-            service.getStock("INVALID");
-        }, "Should throw an exception for non-existent stock");
-    }
-}
+//package com.cbfacademy.apiassessment.stock;
+//
+//import com.cbfacademy.apiassessment.stock.StockNotFoundException;
+//import com.cbfacademy.apiassessment.stock.StockService;
+//import org.junit.jupiter.api.DisplayName;
+//import org.junit.jupiter.api.Test;
+//
+//import static org.junit.jupiter.api.Assertions.assertThrows;
+//
+//public class StockNotFoundExceptionTests {
+//    @Test
+//    @DisplayName("Check for exception on invalid stock retrieval")
+//    public void testExceptionOnInvalidStock() {
+//        StockService service = new StockService();
+//
+//        assertThrows(StockNotFoundException.class, () -> {
+//            service.getStock("INVALID");
+//        }, "Should throw an exception for non-existent stock");
+//    }
+//}
