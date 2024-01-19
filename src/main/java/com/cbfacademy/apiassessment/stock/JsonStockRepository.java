@@ -27,11 +27,12 @@ public class JsonStockRepository implements StockRepository {
         File file = new File(filepath);
         try {
             if (file.exists()) {
-                return objectMapper.readValue(file, new TypeReference<Map<String, Stock>>() {});
+                return objectMapper.readValue(file, new TypeReference<>() {
+                });
 
             }
         } catch (IOException e) {
-            e.printStackTrace(); // Or use a logger if available
+            e.printStackTrace();
             throw new PersistenceException("Failed to load data from JSON", e);
         }
         return new HashMap<>();

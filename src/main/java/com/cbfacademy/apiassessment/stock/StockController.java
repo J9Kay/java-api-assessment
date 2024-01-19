@@ -5,7 +5,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -29,7 +28,7 @@ public class StockController {
     }
 
     @GetMapping("/{ticker}")
-    public ResponseEntity<Stock> getStockById(@PathVariable String ticker) {
+    public ResponseEntity<Stock> getStockByTicker(@PathVariable String ticker) {
         Stock stock = stockService.getStockByTicker(ticker);
         if (stock == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -38,7 +37,7 @@ public class StockController {
     }
 
     @PostMapping
-    public ResponseEntity<Stock> addStock(@RequestBody Stock stock) {
+    public ResponseEntity<Stock> saveStock(@RequestBody Stock stock) {
         Stock savedStock = stockService.saveStock(stock);
         return new ResponseEntity<>(savedStock, HttpStatus.CREATED);
     }
