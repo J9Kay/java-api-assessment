@@ -1,50 +1,45 @@
 package com.cbfacademy.apiassessment.stock;
-import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
-@Service
-public class StockService {
-    private Map<String, Stock> stockMap;
+public interface StockService {
+    /**
+     * Retrieve a list of all Stocks.
+     *
+     * @return A list of all Stocks.
+     */
+    Map<String,Stock> getAllStocks();
 
-    // store data so that it is unique and can be quickly retrieved
-    public StockService() {
-        stockMap = new HashMap<>();
-    }
+    /**
+     * Retrieve a Stock by its ticker.
+     *
+     * @param ticker The ticker of the Stock to retrieve.
+     * @return The Stock with the specified ticker, or null if not found.
+     */
+   Stock getStockByTicker(String ticker);
 
-    public List<Stock> getAllStocks() {
-        return new ArrayList<>(stockMap.values());
-    }
+    /**
+     * Create a new Stock.
+     *
+     * @param name The Stock object to create.
+     * @return The created Stock.
+     */
+    Stock saveStock(Stock name);
 
+    /**
+     * Update an existing Stock by its ticker.
+     *
+     * @param ticker         The ticker of the Stock to update.
+     * @param updatedStock The updated Stock object.
+     * @return The updated STOCK, or null if the ticker is not found.
+     */
+    Stock updateStock(String ticker, Stock updatedStock);
 
-    public void addStock(Stock stock) {
-        stockMap.put(stock.getTicker(), stock);
-    }
-
-    public Stock getStock(String ticker) {
-        if (!stockMap.containsKey(ticker)) {
-            throw new StockNotFoundException("Stock with ticker " + ticker + " not found");
-        }
-        return stockMap.get(ticker);
-    }
-
-    public void updateStock(String ticker, Stock updatedStock) {
-        if (!stockMap.containsKey(ticker)) {
-            throw new StockNotFoundException("Stock with ticker " + ticker + " not found");
-        }
-        stockMap.put(ticker, updatedStock);
-    }
-
-    public void deleteStock(String ticker) {
-        if (!stockMap.containsKey(ticker)) {
-            throw new StockNotFoundException("Stock with ticker " + ticker + " not found");
-        }
-        stockMap.remove(ticker);
-    }
-
-
+    /**
+     * Delete an Stock by its ticker.
+     *
+     * @param ticker The ticker of the Stock to delete.
+     */
+    void deleteStock(String ticker);
 
 }

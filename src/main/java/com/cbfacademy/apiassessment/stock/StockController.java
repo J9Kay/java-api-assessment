@@ -1,10 +1,12 @@
 package com.cbfacademy.apiassessment.stock;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/stocks")
@@ -17,40 +19,42 @@ public class StockController {
         this.stockService = stockService;
     }
 
-    @PostMapping
-    public ResponseEntity<String> addStock(@RequestBody Stock stock) {
-        try {
-            stockService.addStock(stock);
-            return ResponseEntity.ok("Stock added successfully");
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body("Error adding stock: " + e.getMessage());
+    @GetMapping
+    public ResponseEntity<Map<String, Stock>> getAllStocks() {
+        Map<String, Stock> stocks = stockService.getAllStocks();
+        if (stocks.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
+        return new ResponseEntity<>(stocks, HttpStatus.OK);
     }
 
     @GetMapping("/{ticker}")
-    public ResponseEntity<Stock> getStock(@PathVariable String ticker) {
-        try {
-            Stock stock = stockService.getStock(ticker);
-            return ResponseEntity.ok(stock);
-        } catch (StockNotFoundException e) {
-            return ResponseEntity.notFound().build();
+    public ResponseEntity<Stock> getStockById(@PathVariable String ticker) {
+        Stock stock = stockService.getStockByTicker(ticker);
+        if (stock == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-
-
-
+        return new ResponseEntity<>(stock, HttpStatus.OK);
     }
 
-    @GetMapping
-    public ResponseEntity<List<Stock>> getAllStocks() {
-        List<Stock> stocks = stockService.getAllStocks();
-        if (stocks.isEmpty()) {
-            return ResponseEntity.noContent().build();
-        }
-        return ResponseEntity.ok(stocks);
+    @PostMapping
+    public ResponseEntity<Stock> addStock(@RequestBody Stock stock) {
+        Stock savedStock = stockService.saveStock(stock);
+        return new ResponseEntity<>(savedStock, HttpStatus.CREATED);
     }
 
+    @PutMapping("/{ticker}")
+    public ResponseEntity<Stock> updateStock(@PathVariable String ticker, @RequestBody Stock stock) {
+        Stock updatedStock = stockService.updateStock(ticker, stock);
+        if (updatedStock == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(updatedStock, HttpStatus.OK);
+    }
 
-
+    @DeleteMapping("/{ticker}")
+    public ResponseEntity<Void> deleteStock(@PathVariable String ticker) {
+        stockService.deleteStock(ticker);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
 }
-
-
