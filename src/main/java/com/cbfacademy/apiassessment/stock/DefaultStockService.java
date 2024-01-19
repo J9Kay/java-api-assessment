@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Service
-public class MapStockService implements StockService {
+public class DefaultStockService implements StockService {
 
     private final Map<String, Stock> stockMap = new HashMap<>();
 
