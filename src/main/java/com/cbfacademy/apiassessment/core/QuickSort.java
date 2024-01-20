@@ -1,0 +1,4 @@
+package com.cbfacademy.apiassessment.core;
+
+public class QuickSort {
+}
