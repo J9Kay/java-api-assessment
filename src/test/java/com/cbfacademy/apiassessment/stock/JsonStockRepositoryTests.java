@@ -20,10 +20,10 @@ public class JsonStockRepositoryTests {
 
     @Test
     void testSaveAndFindById() {
-        Stock newStock = new Stock("NEW", "New Corp", "$", "Tech", 100.0, 5, 95.0);
+        Stock newStock = new Stock("AAPL", "New Corp", "$", "Tech", 100.0, 5, 95.0);
         repository.save(newStock);
 
-        Stock retrievedStock = repository.findById("NEW");
+        Stock retrievedStock = repository.findById("AAPL");
         assertNotNull(retrievedStock, "Newly saved stock should be retrievable");
         assertEquals("New Corp", retrievedStock.getName(), "Stock name should match");
     }
