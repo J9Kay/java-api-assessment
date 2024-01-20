@@ -8,6 +8,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * The DefaultStockService class implements the StockService interface and provides methods for managing stocks.
+ * It uses a StockRepository to retrieve, save, update, and delete stock records.
+ */
 @Service
 public class DefaultStockService implements StockService {
     private final StockRepository stockRepository;

@@ -13,6 +13,11 @@ import java.io.File;
 import java.io.IOException;
 import java.util.*;
 
+/**
+ * The JsonStockRepository class is an implementation of the StockRepository interface
+ * that stores and retrieves stock data from a JSON file. It uses Jackson's ObjectMapper
+ * for JSON serialization and deserialization.
+ */
 @Repository
 public class JsonStockRepository implements StockRepository {
     private final String filepath;
