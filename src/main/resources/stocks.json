@@ -1,1 +1,13 @@
-{"AAPL":{"ticker":"AAPL","name":"New Corp","currencySymbol":"$","sector":"Tech","currentPrice":100.0,"quantity":5,"purchasePrice":95.0}}
+{
+    "AAPL": {
+      "ticker": "AAPL",
+      "name": "Apple Inc.",
+      "currencySymbol": "$",
+      "sector": "Technology",
+      "currentPrice": 130.75,
+      "quantity": 10,
+      "purchasePrice": 120.50
+    }
+    
+  }
+  

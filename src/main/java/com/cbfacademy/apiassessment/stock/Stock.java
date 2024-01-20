@@ -1,27 +1,22 @@
 package com.cbfacademy.apiassessment.stock;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Stock {
-
-    private String ticker;  // Immutable field
-    private String name;
+    private String ticker; // Immutable field as it's a unique identifier
+    private String name; // Name of stock
     private String currencySymbol;
     private String sector;
     private double currentPrice;  // Current market price
     private int quantity;  // Number of shares owned
     private double purchasePrice;  // Average purchase price
 
-    // Constructor for deserialization
-    @JsonCreator
-    public Stock(@JsonProperty("ticker") String ticker,
-                 @JsonProperty("name") String name,
-                 @JsonProperty("currencySymbol") String currencySymbol,
-                 @JsonProperty("sector") String sector,
-                 @JsonProperty("currentPrice") double currentPrice,
-                 @JsonProperty("quantity") int quantity,
-                 @JsonProperty("purchasePrice") double purchasePrice) {
+    // No-argument constructor for Jackson
+    public Stock() {
+
+    }
+
+    // Constructor for generating a stock
+    public Stock(String ticker, String name, String currencySymbol, String sector, double currentPrice, int quantity, double purchasePrice) {
         if (ticker == null || name == null || currencySymbol == null || sector == null) {
             throw new IllegalArgumentException("Ticker, Name, Currency Symbol, and Sector cannot be null");
         }
@@ -32,10 +27,6 @@ public class Stock {
         this.currentPrice = currentPrice;
         this.quantity = quantity;
         this.purchasePrice = purchasePrice;
-    }
-
-    public Stock() {
-
     }
 
     // Getters
