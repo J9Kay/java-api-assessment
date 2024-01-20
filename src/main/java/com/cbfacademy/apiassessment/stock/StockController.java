@@ -7,6 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Map;
 
+/**
+ * The StockController class handles HTTP requests related to stocks.
+ */
 @RestController
 @RequestMapping("/api/stocks")
 public class StockController {

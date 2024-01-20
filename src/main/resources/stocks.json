@@ -1,13 +1,47 @@
 {
-    "AAPL": {
-      "ticker": "AAPL",
-      "name": "Apple Inc.",
-      "currencySymbol": "$",
-      "sector": "Technology",
-      "currentPrice": 130.75,
-      "quantity": 10,
-      "purchasePrice": 120.50
-    }
-    
+  "AAPL": {
+    "ticker": "AAPL",
+    "name": "Apple Inc.",
+    "currencySymbol": "$",
+    "sector": "Technology",
+    "currentPrice": 130.75,
+    "quantity": 10,
+    "purchasePrice": 120.50
+  },
+  "MSFT": {
+    "ticker": "MSFT",
+    "name": "Microsoft Corporation",
+    "currencySymbol": "$",
+    "sector": "Technology",
+    "currentPrice": 250.55,
+    "quantity": 15,
+    "purchasePrice": 200.40
+  },
+  "AMZN": {
+    "ticker": "AMZN",
+    "name": "Amazon.com, Inc.",
+    "currencySymbol": "$",
+    "sector": "Consumer Discretionary",
+    "currentPrice": 3200.00,
+    "quantity": 5,
+    "purchasePrice": 3100.00
+  },
+  "TSLA": {
+    "ticker": "TSLA",
+    "name": "Tesla, Inc.",
+    "currencySymbol": "$",
+    "sector": "Automotive",
+    "currentPrice": 700.00,
+    "quantity": 8,
+    "purchasePrice": 600.00
+  },
+  "GOOGL": {
+    "ticker": "GOOGL",
+    "name": "Alphabet Inc.",
+    "currencySymbol": "$",
+    "sector": "Technology",
+    "currentPrice": 2800.50,
+    "quantity": 4,
+    "purchasePrice": 2600.00
   }
-  
+}

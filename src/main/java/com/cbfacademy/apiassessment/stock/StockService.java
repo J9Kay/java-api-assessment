@@ -2,6 +2,9 @@ package com.cbfacademy.apiassessment.stock;
 
 import java.util.*;
 
+/**
+ * The StockService interface provides methods for managing stocks.
+ */
 public interface StockService {
     /**
      * Retrieve a list of all Stocks.

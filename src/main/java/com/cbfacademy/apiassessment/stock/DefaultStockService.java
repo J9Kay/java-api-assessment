@@ -1,56 +1,54 @@
 package com.cbfacademy.apiassessment.stock;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Service
 public class DefaultStockService implements StockService {
+    private final StockRepository stockRepository;
 
-    private final Map<String, Stock> stockMap = new HashMap<>();
+    @Autowired
+    public DefaultStockService(StockRepository stockRepository) {
+        this.stockRepository = stockRepository;
+    }
 
     @Override
     public Map<String, Stock> getAllStocks() {
-        return stockMap;
+        List<Stock> stocks = stockRepository.retrieveAll();
+        Map<String, Stock> stocksMap = new HashMap<>();
+        for (Stock s : stocks) {
+            stocksMap.put(s.getTicker(), s);
+        }
+        return stocksMap;
     }
 
     @Override
     public Stock getStockByTicker(String ticker) {
-        return stockMap.get(ticker);
+        return stockRepository.findById(ticker);
     }
 
     @Override
     public Stock saveStock(Stock stock) {
-        if (stock == null || stock.getTicker() == null) {
-            // Handle this scenario. For example, throw an exception or log a warning.
-            throw new IllegalArgumentException("Stock or its ticker cannot be null.");
-        }
-        stockMap.put(stock.getTicker(), stock);
-        return stock;
+        return stockRepository.save(stock);
     }
 
     @Override
     public Stock updateStock(String ticker, Stock updatedStock) {
-        if (ticker == null || updatedStock == null) {
-            // Handle this scenario.
-            throw new IllegalArgumentException("Ticker and stock to be updated cannot be null.");
+        Stock stockToUpdate = getStockByTicker(ticker);
+        if (stockToUpdate != null) {
+            return stockRepository.update(updatedStock);
+        } else {
+            return null;
         }
-        if (!stockMap.containsKey(ticker)) {
-            return null; // Stock does not exist.
-        }
-        stockMap.put(ticker, updatedStock);
-        return updatedStock;
     }
-
-
 
     @Override
     public void deleteStock(String ticker) {
-        if (ticker == null) {
-            // Handle null ticker.
-            throw new IllegalArgumentException("Stock ticker cannot be null.");
-        }
-        stockMap.remove(ticker);
+        stockRepository.delete(ticker);
     }
-
 }

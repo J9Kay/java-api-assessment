@@ -3,6 +3,12 @@ package com.cbfacademy.apiassessment.core;
 import java.io.Serializable;
 import java.util.List;
 
+/**
+ * The Repository interface defines the basic operations for managing entities in a repository.
+ *
+ * @param <T>  the type of entities in the repository
+ * @param <ID> the type of unique identifier for the entities
+ */
 public interface Repository<T, ID extends Serializable> {
 
     /**

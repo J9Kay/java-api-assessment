@@ -1,6 +1,9 @@
 package com.cbfacademy.apiassessment.stock;
 
 
+/**
+ * The Stock class represents a stock in the system.
+ */
 public class Stock {
     private String ticker; // Immutable field as it's a unique identifier
     private String name; // Name of stock
