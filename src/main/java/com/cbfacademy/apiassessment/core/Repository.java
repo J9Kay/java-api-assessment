@@ -32,7 +32,7 @@ public interface Repository<T, ID extends Serializable> {
 
     void delete(ID id) throws IllegalArgumentException, PersistenceException;
 
-    /**
+    /**x
      * Updates an existing entity in the repository.
      *
      * @param entity the entity to update

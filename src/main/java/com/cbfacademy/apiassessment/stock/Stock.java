@@ -1,6 +1,9 @@
 package com.cbfacademy.apiassessment.stock;
-
+import javax.persistence.Entity;
+import javax.persistence.Id;
+@Entity
 public class Stock {
+    @Id
     private String ticker;
     private String name;
     private String currencySymbol;
@@ -28,7 +31,7 @@ public class Stock {
         this.purchasePrice = purchasePrice;
     }
 
-    // 
+    //
     public Stock(String ticker, String name, String currencySymbol, String sector) {
         if (ticker == null) {
             throw new IllegalArgumentException("Ticker cannot be null");
@@ -39,7 +42,7 @@ public class Stock {
         this.sector= sector;
     }
 
-    // 
+    //
     public String getTicker() {
         return ticker;
     }

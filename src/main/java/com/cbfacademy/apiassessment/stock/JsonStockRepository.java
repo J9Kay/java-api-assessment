@@ -94,4 +94,5 @@ public class JsonStockRepository implements StockRepository {
                 .filter(stock -> stock.getSector().equals(sector))
                 .collect(Collectors.toList());
     }
+
 }
