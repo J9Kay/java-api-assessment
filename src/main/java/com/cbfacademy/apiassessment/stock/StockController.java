@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -22,8 +23,8 @@ public class StockController {
     }
 
     @GetMapping
-    public ResponseEntity<Map<String, Stock>> getAllStocks() {
-        Map<String, Stock> stocks = stockService.getAllStocks();
+    public ResponseEntity<List<Stock>> getAllStocks() {
+        List<Stock> stocks = stockService.getAllStocks();
         if (stocks.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }

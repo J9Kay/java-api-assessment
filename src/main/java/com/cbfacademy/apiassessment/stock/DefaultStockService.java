@@ -1,6 +1,5 @@
 package com.cbfacademy.apiassessment.stock;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,13 +21,8 @@ public class DefaultStockService implements StockService {
     }
 
     @Override
-    public Map<String, Stock> getAllStocks() {
-        List<Stock> stocks = stockRepository.retrieveAll();
-        Map<String, Stock> stocksMap = new HashMap<>();
-        for (Stock s : stocks) {
-            stocksMap.put(s.getTicker(), s);
-        }
-        return stocksMap;
+    public List<Stock> getAllStocks() {
+        return stockRepository.retrieveAll();
     }
 
     @Override

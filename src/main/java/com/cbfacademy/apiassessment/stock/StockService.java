@@ -11,7 +11,7 @@ public interface StockService {
      *
      * @return A list of all Stocks.
      */
-    Map<String,Stock> getAllStocks();
+    List<Stock> getAllStocks();
 
     /**
      * Retrieve a Stock by its ticker.
