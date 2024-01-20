@@ -62,4 +62,17 @@ public class StockController {
         stockService.deleteStock(ticker);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
+
+    @GetMapping("/sort")
+    public ResponseEntity<List<Stock>> sortStocks(@RequestParam String attribute) {
+        try {
+            List<Stock> sortedStocks = stockService.sortByAttribute(attribute);
+            if (sortedStocks.isEmpty()) {
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            }
+            return new ResponseEntity<>(sortedStocks, HttpStatus.OK);
+        } catch (IllegalArgumentException e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
 }

@@ -25,6 +25,13 @@ public interface StockRepository extends Repository<Stock,String > {
      */
     List<Stock> searchBySector(String sector);
 
+    /**
+     * Sorts stocks based on a specified attribute.
+     *
+     * @param attribute The attribute to sort by.
+     * @return a list of sorted Stocks
+     */
+    List<Stock> sortByAttribute(String attribute);
 
 
 

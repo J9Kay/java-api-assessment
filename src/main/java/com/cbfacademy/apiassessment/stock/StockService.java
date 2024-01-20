@@ -45,4 +45,12 @@ public interface StockService {
      */
     void deleteStock(String ticker);
 
+    /**
+     * Sorts the stocks based on a specified attribute.
+     *
+     * @param attribute The attribute by which to sort the stocks.
+     * @return A sorted list of stocks based on the specified attribute.
+     */
+    List<Stock> sortByAttribute(String attribute);
+
 }

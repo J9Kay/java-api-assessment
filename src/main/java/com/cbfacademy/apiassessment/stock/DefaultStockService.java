@@ -49,4 +49,11 @@ public class DefaultStockService implements StockService {
     public void deleteStock(String ticker) {
         stockRepository.delete(ticker);
     }
+
+    @Override
+    public List<Stock> sortByAttribute(String attribute) {
+        return stockRepository.sortByAttribute(attribute);
+
+    }
+
 }

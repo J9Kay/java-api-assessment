@@ -114,5 +114,30 @@ public class JsonStockRepository implements StockRepository {
                 .collect(Collectors.toList());
     }
 
+    @Override
+    public List<Stock> sortByAttribute(String attribute) {
+        List<Stock> sortedStocks = new ArrayList<>(database.values());
+
+        switch (attribute.toLowerCase()) {
+            case "name":
+                sortedStocks.sort(Comparator.comparing(Stock::getName));
+                break;
+            case "currentprice":
+                sortedStocks.sort(Comparator.comparing(Stock::getCurrentPrice));
+                break;
+            case "sector":
+                sortedStocks.sort(Comparator.comparing(Stock::getSector));
+                break;
+            case "quantity":
+                sortedStocks.sort(Comparator.comparing(Stock::getQuantity));
+                break;
+            default:
+                throw new IllegalArgumentException("Unknown attribute for sorting: " + attribute);
+        }
+
+        return sortedStocks;
+}
+
+
 
 }
