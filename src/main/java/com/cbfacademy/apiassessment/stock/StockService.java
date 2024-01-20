@@ -21,10 +21,10 @@ public interface StockService {
     /**
      * Create a new Stock.
      *
-     * @param name The Stock object to create.
+     * @param stock The Stock object to create.
      * @return The created Stock.
      */
-    Stock saveStock(Stock name);
+    Stock saveStock(Stock stock);
 
     /**
      * Update an existing Stock by its ticker.

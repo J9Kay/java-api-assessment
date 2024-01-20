@@ -42,6 +42,8 @@ public class StockController {
         return new ResponseEntity<>(savedStock, HttpStatus.CREATED);
     }
 
+
+
     @PutMapping("/{ticker}")
     public ResponseEntity<Stock> updateStock(@PathVariable String ticker, @RequestBody Stock stock) {
         Stock updatedStock = stockService.updateStock(ticker, stock);

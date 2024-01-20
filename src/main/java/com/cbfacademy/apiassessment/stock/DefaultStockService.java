@@ -21,21 +21,36 @@ public class DefaultStockService implements StockService {
 
     @Override
     public Stock saveStock(Stock stock) {
+        if (stock == null || stock.getTicker() == null) {
+            // Handle this scenario. For example, throw an exception or log a warning.
+            throw new IllegalArgumentException("Stock or its ticker cannot be null.");
+        }
         stockMap.put(stock.getTicker(), stock);
         return stock;
     }
 
     @Override
     public Stock updateStock(String ticker, Stock updatedStock) {
+        if (ticker == null || updatedStock == null) {
+            // Handle this scenario.
+            throw new IllegalArgumentException("Ticker and stock to be updated cannot be null.");
+        }
         if (!stockMap.containsKey(ticker)) {
-            return null;
+            return null; // Stock does not exist.
         }
         stockMap.put(ticker, updatedStock);
         return updatedStock;
     }
 
+
+
     @Override
     public void deleteStock(String ticker) {
+        if (ticker == null) {
+            // Handle null ticker.
+            throw new IllegalArgumentException("Stock ticker cannot be null.");
+        }
         stockMap.remove(ticker);
     }
+
 }

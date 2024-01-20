@@ -27,7 +27,7 @@ public class JsonStockRepository implements StockRepository {
         File file = new File(filepath);
         try {
             if (file.exists()) {
-                return objectMapper.readValue(file, new TypeReference<>() {
+                return objectMapper.readValue(file, new TypeReference<Map<String, Stock>>() {
                 });
 
             }
