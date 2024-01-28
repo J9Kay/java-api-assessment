@@ -50,9 +50,11 @@ public class JsonStockRepository implements StockRepository {
     private void saveDataToJson() {
         try {
             Resource resource = resourceLoader.getResource(filepath);
-            System.out.println("Data successfully saved to JSON file.");
             if (resource.isFile()) {
+                File file = resource.getFile();
+                System.out.println("Saving data to JSON file at: " + file.getAbsolutePath());
                 objectMapper.writeValue(resource.getFile(), database);
+                System.out.println("Data successfully saved to JSON file.");
             } else {
                 System.out.println("Cannot save to source: " +filepath);
                 throw new PersistenceException("Cannot save to non-file resource: " + filepath);
