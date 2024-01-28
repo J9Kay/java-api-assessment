@@ -43,6 +43,7 @@ public class StockController {
     @PostMapping
     public ResponseEntity<Stock> saveStock(@RequestBody Stock stock) {
         Stock savedStock = stockService.saveStock(stock);
+        System.out.println(savedStock.getName());
         return new ResponseEntity<>(savedStock, HttpStatus.CREATED);
     }
 
@@ -62,8 +63,8 @@ public class StockController {
         stockService.deleteStock(ticker);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
-
-    @GetMapping("/sort")
+    //read documentation of rest parameter
+    @GetMapping("/")
     public ResponseEntity<List<Stock>> sortStocks(@RequestParam String attribute) {
         try {
             List<Stock> sortedStocks = stockService.sortByAttribute(attribute);

@@ -1,4 +1,4 @@
-package com.cbfacademy.apiassessment.core;
+package com.cbfacademy.apiassessment.search;
 
 /**
  * Represents a class that can sort array elements

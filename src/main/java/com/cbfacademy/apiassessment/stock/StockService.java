@@ -52,5 +52,5 @@ public interface StockService {
      * @return A sorted list of stocks based on the specified attribute.
      */
     List<Stock> sortByAttribute(String attribute);
-
+    //validate the valude being sorted is one that can be sorted by
 }

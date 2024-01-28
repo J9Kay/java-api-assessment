@@ -28,6 +28,7 @@ public class JsonStockRepository implements StockRepository {
     // The filepath is injected from application properties.
     public JsonStockRepository(@Value("${json.file.path}") String filepath, ResourceLoader resourceLoader) {
         this.filepath = filepath;
+        System.out.println("Filepath for JSON Respository: " + filepath);
         this.objectMapper = new ObjectMapper();
         this.resourceLoader = resourceLoader;
         this.database = loadDataFromJson();
@@ -47,15 +48,17 @@ public class JsonStockRepository implements StockRepository {
     }
 
     private void saveDataToJson() {
-        // Saving to JSON should be handled with care, especially if it's a classpath resource.
         try {
             Resource resource = resourceLoader.getResource(filepath);
+            System.out.println("Data successfully saved to JSON file.");
             if (resource.isFile()) {
                 objectMapper.writeValue(resource.getFile(), database);
             } else {
+                System.out.println("Cannot save to source: " +filepath);
                 throw new PersistenceException("Cannot save to non-file resource: " + filepath);
             }
         } catch (IOException e) {
+            System.out.println("Failed to save data to JSON: " + e.getMessage());
             throw new PersistenceException("Failed to save data to JSON", e);
         }
     }
@@ -71,9 +74,16 @@ public class JsonStockRepository implements StockRepository {
     }
 
     @Override
-    public Stock save(Stock entity) throws IllegalArgumentException, PersistenceException {
-        return null;
+    public Stock save(Stock stock) throws IllegalArgumentException, PersistenceException {
+        if (stock == null || stock.getTicker() == null) {
+            throw new IllegalArgumentException("Stock or Ticker cannot be null");
+        }
+
+        database.put(stock.getTicker(), stock);
+        saveDataToJson(); // Save the updated database to the JSON file
+        return stock; // Return the saved stock
     }
+
 
 
     @Override
