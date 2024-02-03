@@ -76,4 +76,13 @@ public class StockController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
+    @GetMapping("/search/{ticker}")
+    public ResponseEntity<Stock> searchStockByTicker(@PathVariable String ticker) {
+        Stock stock = stockService.searchByTicker(stockService.getAllStocks(), ticker);
+        if (stock != null) {
+            return ResponseEntity.ok(stock);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
 }

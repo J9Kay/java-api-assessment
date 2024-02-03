@@ -1,11 +1,10 @@
 package com.cbfacademy.apiassessment.stock;
 
+import com.cbfacademy.apiassessment.search.Search;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * The DefaultStockService class implements the StockService interface and provides methods for managing stocks.
@@ -14,10 +13,12 @@ import java.util.Map;
 @Service
 public class DefaultStockService implements StockService {
     private final StockRepository stockRepository;
+    private final Search search;
 
     @Autowired
-    public DefaultStockService(StockRepository stockRepository) {
+    public DefaultStockService(StockRepository stockRepository, Search search) {
         this.stockRepository = stockRepository;
+        this.search = search;
     }
 
     @Override
@@ -54,6 +55,11 @@ public class DefaultStockService implements StockService {
     public List<Stock> sortByAttribute(String attribute) {
         return stockRepository.sortByAttribute(attribute);
 
+    }
+
+    @Override
+    public Stock searchByTicker(List<Stock> stocks, String targetTicker) {
+        return search.searchByTicker(stocks, targetTicker);
     }
 
 }

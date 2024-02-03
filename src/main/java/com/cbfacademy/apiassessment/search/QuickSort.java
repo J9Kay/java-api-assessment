@@ -1,5 +1,8 @@
 package com.cbfacademy.apiassessment.search;
 
+/**
+ * Implements the ArraySorter interface to provide a QuickSort algorithm for sorting an array of integers.
+ */
 public class QuickSort implements ArraySorter {
 
 

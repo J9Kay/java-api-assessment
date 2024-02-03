@@ -1,21 +1,26 @@
 package com.cbfacademy.apiassessment.search;
 
-public class LinearSearch {
+import com.cbfacademy.apiassessment.stock.Stock;
+import org.springframework.stereotype.Component;
+
+import java.util.List;
+@Component
+public class LinearSearch implements Search {
 
     /**
-     * Performs a linear search on an array of integers.
+     * Performs a linear search to find a Stock by its ticker.
      *
-     * @param arr The array to search in.
-     * @param target The value to search for.
-     * @return The index of the target value if found, otherwise -1.
+     * @param stocks The list of Stock objects to search through.
+     * @param targetTicker The ticker symbol of the Stock to find.
+     * @return The Stock object with the matching ticker, or null if not found.
      */
-    public static int search(String[] arr, String target) {
-        for (int i = 0; i < arr.length; i++) {
-            if (arr[i].equals(target)) {
-                return i; // Target found, return its index.
+    @Override
+    public Stock searchByTicker(List<Stock> stocks, String targetTicker) {
+        for (Stock stock : stocks) {
+            if (stock.getTicker().equalsIgnoreCase(targetTicker)) {
+                return stock; // Stock with matching ticker found
             }
         }
-        return -1; // Target not found.
+        return null; // Stock not found
     }
-
 }
