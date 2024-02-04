@@ -62,4 +62,10 @@ public class DefaultStockService implements StockService {
         return search.searchByTicker(stocks, targetTicker);
     }
 
+    @Override
+    public List<Stock> searchBySector(String sector) {
+        List<Stock> allStocks = getAllStocks();
+        return search.searchBySector(allStocks, sector);
+    }
+
 }

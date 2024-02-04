@@ -85,4 +85,14 @@ public class StockController {
             return ResponseEntity.notFound().build();
         }
     }
+
+    @GetMapping("/searchBySector/{sector}")
+    public ResponseEntity<List<Stock>> searchStockBySector(@PathVariable String sector) {
+        List<Stock> stocks = stockService.searchBySector(sector);
+        if (!stocks.isEmpty()) {
+            return ResponseEntity.ok(stocks);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
 }

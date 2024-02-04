@@ -57,5 +57,9 @@ public interface StockService {
     //validate the valude being sorted is one that can be sorted by
 
 
+    List<Stock> searchBySector(String sector);
+
+
+
 
 }

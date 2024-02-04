@@ -3,6 +3,7 @@ package com.cbfacademy.apiassessment.search;
 import com.cbfacademy.apiassessment.stock.Stock;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.List;
 @Component
 public class LinearSearch implements Search {
@@ -22,5 +23,16 @@ public class LinearSearch implements Search {
             }
         }
         return null; // Stock not found
+    }
+
+    @Override
+    public List<Stock> searchBySector(List<Stock> stocks, String sector) {
+        List<Stock> foundStocks = new ArrayList<>();
+        for (Stock stock : stocks) {
+            if (stock.getSector().equalsIgnoreCase(sector)) {
+                foundStocks.add(stock);
+            }
+        }
+        return foundStocks;
     }
 }
