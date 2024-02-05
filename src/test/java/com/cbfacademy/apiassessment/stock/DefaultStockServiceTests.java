@@ -70,12 +70,42 @@ class DefaultStockServiceTests {
 
     @Test
     void updateStockTest() {
+        // Arrange
         Stock existingStock = createStock("AAPL");
-        when(stockRepository.update(existingStock)).thenReturn(existingStock);
-        Stock updatedStock = stockService.updateStock(existingStock);
-        assertNotNull(updatedStock);
-        assertEquals("AAPL", updatedStock.getTicker());
-        verify(stockRepository).update(existingStock);
+        Stock updatedStock = new Stock("AAPL", "Apple Inc. Updated", "$", "Technology", 150.0, 50, 95.0);
+
+        // Mock the behavior of the repository to return an existing stock when findById is called
+        when(stockRepository.findById("AAPL")).thenReturn(existingStock);
+
+        // Mock the behavior of the repository to return the updated stock when update is called
+        when(stockRepository.update(updatedStock)).thenReturn(updatedStock);
+
+        // Act
+        Stock result = stockService.updateStock(updatedStock);
+
+        // Assert
+        assertNotNull(result, "The result should not be null");
+        assertEquals(updatedStock.getName(), result.getName(), "The names should match after update");
+        assertEquals(updatedStock.getCurrentPrice(), result.getCurrentPrice(), "The prices should match after update");
+
+        // Verify that the repository's update method was called once with the updated stock
+        verify(stockRepository).update(updatedStock);
+    }
+
+    @Test
+    void updateStockTestNotExistentStock() {
+        Stock existingStock = createStock("AAPL");
+        when(stockRepository.findById("AAPL")).thenReturn(null); // Simulate stock not found
+
+        Exception exception = assertThrows(StockNotFoundException.class, () -> {
+            stockService.updateStock(existingStock);
+        });
+
+        String expectedMessage = "Stock with ticker AAPL not found";
+        String actualMessage = exception.getMessage();
+
+        assertTrue(actualMessage.contains(expectedMessage));
+        verify(stockRepository, never()).update(any(Stock.class)); // Ensure update is never called
     }
 
     /**
