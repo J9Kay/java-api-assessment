@@ -49,12 +49,26 @@ public class DefaultStockService implements StockService {
     @Override
     public Stock saveStock(Stock stock) {
         try {
+            // Check if the stock already exists in the repository
+            Stock existingStock = stockRepository.findById(stock.getTicker());
+            if (existingStock != null) {
+                // Stock with the same ticker already exists
+                log.error("Stock with ticker {} already exists", stock.getTicker());
+                throw new DuplicateStockException("Stock with ticker " + stock.getTicker() + " already exists.");
+            }
+            // If it doesn't exist, proceed with saving the new stock
             return stockRepository.save(stock);
+        } catch (DuplicateStockException e) {
+            // Handle the case where the stock already exists
+            log.error("You Attempted to save duplicate stock: {}", e.getMessage());
+            throw e;
         } catch (Exception e) {
+            // Handle other exceptions
             log.error("Error saving stock: {}", stock.getTicker(), e);
             throw new PersistenceException("Failed to save stock", e);
         }
     }
+
 
 
     @Override
