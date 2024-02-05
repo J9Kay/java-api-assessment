@@ -19,9 +19,18 @@ public class Stock {
     }
 
     // Constructor for generating a stock
-    public Stock(String ticker, String name, String currencySymbol, String sector, double currentPrice, int quantity, double purchasePrice) {
+    public Stock(String ticker, String name, String currencySymbol, String sector, Double currentPrice, Integer quantity, Double purchasePrice) {
         if (ticker == null || name == null || currencySymbol == null || sector == null) {
             throw new IllegalArgumentException("Ticker, Name, Currency Symbol, and Sector cannot be null");
+        }
+        if (currentPrice == null || currentPrice < 0) {
+            throw new IllegalArgumentException("Current Price cannot be null or negative");
+        }
+        if (quantity == null || quantity < 0) {
+            throw new IllegalArgumentException("Quantity cannot be null or negative");
+        }
+        if (purchasePrice == null || purchasePrice < 0) {
+            throw new IllegalArgumentException("Purchase Price cannot be null or negative");
         }
         this.ticker = ticker;
         this.name = name;

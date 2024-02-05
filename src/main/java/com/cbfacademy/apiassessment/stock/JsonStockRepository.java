@@ -77,8 +77,24 @@ public class JsonStockRepository implements StockRepository {
 
     @Override
     public Stock save(Stock stock) throws IllegalArgumentException, PersistenceException {
-        if (stock == null || stock.getTicker() == null) {
-            throw new IllegalArgumentException("Stock or Ticker cannot be null");
+        if (stock == null) {
+            throw new IllegalArgumentException("Stock must not be null");
+        }
+        if (stock.getTicker() == null || stock.getTicker().trim().isEmpty()) {
+            throw new IllegalArgumentException("Stock ticker must not be null or empty");
+        }
+        if (stock.getName() == null || stock.getName().trim().isEmpty()) {
+            throw new IllegalArgumentException("Stock name must not be null or empty");
+        }
+        // Check for non-negative values since these are primitive types and cannot be null.
+        if (stock.getCurrentPrice() < 0) {
+            throw new IllegalArgumentException("Stock current price must not be negative");
+        }
+        if (stock.getPurchasePrice() < 0) {
+            throw new IllegalArgumentException("Stock purchase price must not be negative");
+        }
+        if (stock.getQuantity() < 0) {
+            throw new IllegalArgumentException("Stock quantity must not be negative");
         }
 
         database.put(stock.getTicker(), stock);

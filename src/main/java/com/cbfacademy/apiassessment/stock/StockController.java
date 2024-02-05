@@ -50,8 +50,11 @@ public class StockController {
 
 
     @PutMapping("/{ticker}")
-    public ResponseEntity<Stock> updateStock(@PathVariable String ticker, @RequestBody Stock stock) {
-        Stock updatedStock = stockService.updateStock(ticker, stock);
+    public ResponseEntity<Stock> updateStock(@RequestBody Stock stock) {
+        if (stock == null || stock.getTicker() == null) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        Stock updatedStock = stockService.updateStock(stock);
         if (updatedStock == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
@@ -64,7 +67,7 @@ public class StockController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
     //read documentation of rest parameter
-    @GetMapping("/")
+    @GetMapping("/sort")
     public ResponseEntity<List<Stock>> sortStocks(@RequestParam String attribute) {
         try {
             List<Stock> sortedStocks = stockService.sortByAttribute(attribute);

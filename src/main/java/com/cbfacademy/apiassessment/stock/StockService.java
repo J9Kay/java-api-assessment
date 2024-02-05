@@ -32,11 +32,10 @@ public interface StockService {
     /**
      * Update an existing Stock by its ticker.
      *
-     * @param ticker         The ticker of the Stock to update.
      * @param updatedStock The updated Stock object.
      * @return The updated STOCK, or null if the ticker is not found.
      */
-    Stock updateStock(String ticker, Stock updatedStock);
+    Stock updateStock(Stock updatedStock);
 
     /**
      * Delete an Stock by its ticker.
