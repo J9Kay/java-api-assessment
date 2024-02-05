@@ -39,7 +39,7 @@ public class StockController {
         }
         return new ResponseEntity<>(stock, HttpStatus.OK);
     }
-//
+//a
     @PostMapping
     public ResponseEntity<Stock> saveStock(@RequestBody Stock stock) {
         Stock savedStock = stockService.saveStock(stock);
