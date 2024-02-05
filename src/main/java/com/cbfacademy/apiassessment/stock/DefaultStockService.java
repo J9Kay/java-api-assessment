@@ -59,18 +59,25 @@ public class DefaultStockService implements StockService {
 
     @Override
     public Stock updateStock(Stock updatedStock) {
-        // Check if the updatedStock object or its ticker is null
         if (updatedStock == null || updatedStock.getTicker() == null) {
             log.error("Stock object or ticker is null");
             throw new IllegalArgumentException("Stock and its ticker must not be null");
         }
         try {
+            Stock existingStock = stockRepository.findById(updatedStock.getTicker());
+            if (existingStock == null) {
+                throw new StockNotFoundException("Stock with ticker " + updatedStock.getTicker() + " not found");
+            }
             return stockRepository.update(updatedStock);
+        } catch (StockNotFoundException e) {
+            log.error("Failed to update stock because it was not found: {}", e.getMessage());
+            throw e; // Re-throw the exception to be handled further up the call stack if necessary
         } catch (Exception e) {
-            log.error("Error updating stock: {}", updatedStock.getTicker(), e);
-            throw new PersistenceException("Failed to update stock", e);
+            log.error("Unexpected error updating stock: {}", updatedStock.getTicker(), e);
+            throw new PersistenceException("Failed to update stock due to an unexpected error", e);
         }
     }
+
 
 
     @Override
