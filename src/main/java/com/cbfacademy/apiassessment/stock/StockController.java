@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -46,22 +47,13 @@ public class StockController {
     }
 
 
-    @Operation(
-            description = "Get endpoint for retrieving stocks by ID",
-            summary= "This is a summary for GET endpoint to retreive stock by ticker",
-            responses = {
-                    @ApiResponse(
-                            description = "Success",
-                            responseCode = "200"
-                    ),
-                    @ApiResponse (
-                            description = "Unauthorised / Invalid token",
-                            responseCode = "403"
-                    )
-            }
-    )
-
     @GetMapping("/{ticker}")
+    @Operation(summary = "Retrieve a stock", description = "Retrieves a stock available in the system",
+            responses = {
+                    @ApiResponse(description = "Successful retrieval", responseCode = "200",
+                            content = @Content(schema = @Schema(implementation = Stock.class))),
+                    @ApiResponse(description = "Stock not found", responseCode = "404")
+            })
     public ResponseEntity<Stock> getStockByTicker(@PathVariable String ticker) {
         Stock stock = stockService.getStockByTicker(ticker);
         if (stock == null) {
@@ -71,33 +63,97 @@ public class StockController {
     }
 //a
     @PostMapping
-    public ResponseEntity<Stock> saveStock(@RequestBody Stock stock) {
-        Stock savedStock = stockService.saveStock(stock);
-        System.out.println(savedStock.getName());
-        return new ResponseEntity<>(savedStock, HttpStatus.CREATED);
+    @Operation(summary = "Add a stock or stocks", description = "Add a stock or stocks to the system",
+            responses = {
+                    @ApiResponse(description = "Successful creation of a stock", responseCode = "201",
+                            content = @Content(schema = @Schema(implementation = Stock.class))),
+                    @ApiResponse(description = "Validation error", responseCode = "400"),
+                    @ApiResponse(description = "Error adding stock", responseCode = "404"),
+                    @ApiResponse(description = "Internal server error", responseCode = "500")
+
+            })
+    public ResponseEntity<Object> saveStock(@RequestBody Stock stock) {
+        List<String> validationErrors = validateStock(stock);
+        if (!validationErrors.isEmpty()) {
+            return new ResponseEntity<>(Map.of("errors", validationErrors), HttpStatus.BAD_REQUEST);
+        }
+        try {
+            Stock savedStock = stockService.saveStock(stock);
+            return new ResponseEntity<>(savedStock, HttpStatus.CREATED);
+        } catch (StockNotFoundException e) {
+            return new ResponseEntity<>(Map.of("error", e.getMessage()), HttpStatus.NOT_FOUND);
+        } catch (Exception e) {
+            return new ResponseEntity<>(Map.of("error", "An unexpected error occurred while saving the stock. Error: "+e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    //helper function to check for errors
+    private List<String> validateStock(Stock stock) {
+        List<String> errors = new ArrayList<>();
+        if (stock.getName() == null || stock.getName().trim().isEmpty()) {
+            errors.add("Stock name is required.");
+        }
+        if (stock.getCurrentPrice() < 0) {
+            errors.add("Current price cannot be negative.");
+        }
+        if (stock.getPurchasePrice() < 0) {
+            errors.add("Purchase price cannot be negative.");
+        }
+        if (stock.getQuantity() < 0) {
+            errors.add("Quantity cannot be negative.");
+        }
+        // I can add more errors as needed
+        return errors;
     }
 
 
 
     @PutMapping("/{ticker}")
+    @Operation(summary = "Update stock information", description = "Update information on an existing stock available in the system",
+            responses = {
+                    @ApiResponse(description = "Successful update", responseCode = "200",
+                            content = @Content(schema = @Schema(implementation = Stock.class))),
+                    @ApiResponse(description = "Error updating stock", responseCode = "404")
+            })
     public ResponseEntity<Stock> updateStock(@RequestBody Stock stock) {
         if (stock == null || stock.getTicker() == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-        Stock updatedStock = stockService.updateStock(stock);
-        if (updatedStock == null) {
+        try {
+            Stock updatedStock = stockService.updateStock(stock);
+            if (updatedStock == null) {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+            return new ResponseEntity<>(updatedStock, HttpStatus.OK);
+        } catch (StockNotFoundException e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        return new ResponseEntity<>(updatedStock, HttpStatus.OK);
+
     }
 
     @DeleteMapping("/{ticker}")
+    @Operation(summary = "Delete a stock", description = "Delete a stock available in the system",
+            responses = {
+                    @ApiResponse(description = "Successful deletion", responseCode = "200",
+                            content = @Content(schema = @Schema(implementation = Stock.class))),
+                    @ApiResponse(description = "Error deleting stock", responseCode = "404")
+            })
     public ResponseEntity<Void> deleteStock(@PathVariable String ticker) {
         stockService.deleteStock(ticker);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
     //read documentation of rest parameter
     @GetMapping("/sort")
+    @Operation(summary = "Sort stock based on a specified attribute", description = "This endpoint allows users to," +
+            " organize their stock view according to various stock attributes such as name, price, or quantity." +
+            " It improves user experience by providing a customized view.",
+            responses = {
+                    @ApiResponse(description = "Sort successful", responseCode = "200",
+                            content = @Content(schema = @Schema(implementation = Stock.class))),
+                    @ApiResponse(description = "Error sorting by attribute", responseCode = "404")
+            })
     public ResponseEntity<List<Stock>> sortStocks(@RequestParam String attribute) {
         try {
             List<Stock> sortedStocks = stockService.sortByAttribute(attribute);
@@ -109,7 +165,15 @@ public class StockController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
-    @GetMapping("/search/{ticker}")
+    @GetMapping("/search/{ticker}")  // this one is redundant to be changed to name.
+    @Operation(summary = "Searches for a stock by its ticker symbol.", description = "This function is crucial for" +
+            " users looking to quickly find detailed information about a specific stock, including its current price," +
+            " quantity owned, and purchase price.",
+            responses = {
+                    @ApiResponse(description = "Filter successful", responseCode = "200",
+                            content = @Content(schema = @Schema(implementation = Stock.class))),
+                    @ApiResponse(description = "Filter unsuccessful", responseCode = "404")
+            })
     public ResponseEntity<Stock> searchStockByTicker(@PathVariable String ticker) {
         Stock stock = stockService.searchByTicker(stockService.getAllStocks(), ticker);
         if (stock != null) {
@@ -120,6 +184,13 @@ public class StockController {
     }
 
     @GetMapping("/searchBySector/{sector}")
+    @Operation(summary = "Filters stocks by their sector", description = "This endpoint is designed for users" +
+            " interested in viewing stocks within a specific market sector.",
+            responses = {
+                    @ApiResponse(description = "Filter successful", responseCode = "200",
+                            content = @Content(schema = @Schema(implementation = Stock.class))),
+                    @ApiResponse(description = "Filter unsuccessful", responseCode = "404")
+            })
     public ResponseEntity<List<Stock>> searchStockBySector(@PathVariable String sector) {
         List<Stock> stocks = stockService.searchBySector(sector);
         if (!stocks.isEmpty()) {
