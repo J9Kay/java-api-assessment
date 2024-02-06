@@ -1,9 +1,15 @@
 package com.cbfacademy.apiassessment.stock;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.beans.factory.annotation.Autowired;
+
 
 import java.util.List;
 import java.util.Map;
@@ -13,6 +19,7 @@ import java.util.Map;
  */
 @RestController
 @RequestMapping("/api/stocks")
+@Tag(name = "Stocks")
 public class StockController {
 
     private final StockService stockService;
@@ -22,7 +29,14 @@ public class StockController {
         this.stockService = stockService;
     }
 
+
     @GetMapping
+    @Operation(summary = "Get all stocks", description = "Retrieves a list of all stocks available in the system",
+            responses = {
+                    @ApiResponse(description = "Successful retrieval", responseCode = "200",
+                            content = @Content(schema = @Schema(implementation = Stock.class))),
+                    @ApiResponse(description = "No stocks found", responseCode = "404")
+            })
     public ResponseEntity<List<Stock>> getAllStocks() {
         List<Stock> stocks = stockService.getAllStocks();
         if (stocks.isEmpty()) {
@@ -30,6 +44,22 @@ public class StockController {
         }
         return new ResponseEntity<>(stocks, HttpStatus.OK);
     }
+
+
+    @Operation(
+            description = "Get endpoint for retrieving stocks by ID",
+            summary= "This is a summary for GET endpoint to retreive stock by ticker",
+            responses = {
+                    @ApiResponse(
+                            description = "Success",
+                            responseCode = "200"
+                    ),
+                    @ApiResponse (
+                            description = "Unauthorised / Invalid token",
+                            responseCode = "403"
+                    )
+            }
+    )
 
     @GetMapping("/{ticker}")
     public ResponseEntity<Stock> getStockByTicker(@PathVariable String ticker) {
