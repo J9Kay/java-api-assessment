@@ -174,22 +174,23 @@ public class StockController {
             responses = {
                     @ApiResponse(description = "Sort successful", responseCode = "200",
                             content = @Content(schema = @Schema(implementation = Stock.class))),
+                    @ApiResponse(description = "Attribute not valid, stocks can be sorted by either: name, currentPrice, purchasePrice or quantity", responseCode = "400"),
                     @ApiResponse(description = "Error sorting by attribute", responseCode = "404")
             })
-    public ResponseEntity<List<Stock>> sortStocks(@RequestParam String attribute) {
+    public ResponseEntity<Object> sortStocks(@RequestParam String attribute) {
         // List of valid attributes that you can sort by
         List<String> validAttributes = Arrays.asList("name", "currentPrice", "purchasePrice", "quantity");
         if (!validAttributes.contains(attribute)) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("Attribute not valid, stocks can be sorted by either: name, currentPrice, purchasePrice or quantity", HttpStatus.BAD_REQUEST);
         }
         try {
             List<Stock> sortedStocks = stockService.sortByAttribute(attribute);
             if (sortedStocks.isEmpty()) {
-                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+                return new ResponseEntity<>("No stocks found", HttpStatus.NO_CONTENT);
             }
             return new ResponseEntity<>(sortedStocks, HttpStatus.OK);
         } catch (IllegalArgumentException e) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("Error sorting by attribute", HttpStatus.BAD_REQUEST);
         }
     }
 //    @GetMapping("/search/{ticker}")  // this one is redundant to be changed to name.

@@ -159,6 +159,9 @@ public class JsonStockRepository implements StockRepository {
             case "quantity":
                 sortedStocks.sort(Comparator.comparing(Stock::getQuantity));
                 break;
+            case "purchaseprice":
+                sortedStocks.sort(Comparator.comparing(Stock::getPurchasePrice));
+                break;
             default:
                 throw new IllegalArgumentException("Unknown attribute for sorting: " + attribute);
         }
