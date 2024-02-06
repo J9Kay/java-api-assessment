@@ -148,16 +148,21 @@ public class StockController {
     @DeleteMapping("/{ticker}")
     @Operation(summary = "Delete a stock", description = "Delete a stock available in the system",
             responses = {
-                    @ApiResponse(description = "Successful deletion", responseCode = "200",
+                    @ApiResponse(description = "Successful deletion", responseCode = "204",
                             content = @Content(schema = @Schema(implementation = Stock.class))),
                     @ApiResponse(description = "Error deleting stock", responseCode = "404")
             })
-    public ResponseEntity<Void> deleteStock(@PathVariable String ticker) {
+    public ResponseEntity<?> deleteStock(@PathVariable String ticker) {
         try {
             stockService.deleteStock(ticker);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        } catch(Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+
+        } catch(StockNotFoundException e) {
+            // Handle the case where the stock to be deleted does not exist
+            return new ResponseEntity<>(Map.of("error", e.getMessage()), HttpStatus.NOT_FOUND);
+        } catch (Exception e) {
+            // Handle other unexpected exceptions
+            return new ResponseEntity<>(Map.of("error", "Internal server error"), HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
     }

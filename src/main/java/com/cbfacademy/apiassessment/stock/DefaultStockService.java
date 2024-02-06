@@ -94,13 +94,18 @@ public class DefaultStockService implements StockService {
 
 
 
-    @Override
     public void deleteStock(String ticker) {
+        // Check if the stock exists
+        List<Stock> stocks = stockRepository.searchByTicker(ticker);
+        if (stocks.isEmpty()) {
+            throw new StockNotFoundException("Stock not found: " + ticker);
+        }
+        // Attempt to delete the stock
         try {
             stockRepository.delete(ticker);
         } catch (Exception e) {
             log.error("Error deleting stock: {}", ticker, e);
-            throw new PersistenceException("Failed to delete stock", e);
+            throw new PersistenceException("Failed to delete stock: " + ticker, e);
         }
     }
 
