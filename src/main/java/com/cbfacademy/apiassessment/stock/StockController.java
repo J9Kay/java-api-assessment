@@ -1,5 +1,6 @@
 package com.cbfacademy.apiassessment.stock;
 
+import io.micrometer.common.util.StringUtils;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -12,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -39,11 +41,17 @@ public class StockController {
                     @ApiResponse(description = "No stocks found", responseCode = "404")
             })
     public ResponseEntity<List<Stock>> getAllStocks() {
-        List<Stock> stocks = stockService.getAllStocks();
-        if (stocks.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        }
-        return new ResponseEntity<>(stocks, HttpStatus.OK);
+
+            try {
+                List<Stock> stocks = stockService.getAllStocks();
+                if (stocks.isEmpty()) {
+                    return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+                }
+                return new ResponseEntity<>(stocks, HttpStatus.OK);
+            } catch (Exception e) {
+                return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            }
+
     }
 
 
@@ -73,6 +81,9 @@ public class StockController {
 
             })
     public ResponseEntity<Object> saveStock(@RequestBody Stock stock) {
+        if (stockService.searchByTicker(stockService.getAllStocks(), stock.getTicker()) != null) {
+        return new ResponseEntity<>(Map.of("error", "Stock with ticker " + stock.getTicker() + " already exists."), HttpStatus.BAD_REQUEST);
+    }
         List<String> validationErrors = validateStock(stock);
         if (!validationErrors.isEmpty()) {
             return new ResponseEntity<>(Map.of("errors", validationErrors), HttpStatus.BAD_REQUEST);
@@ -90,7 +101,7 @@ public class StockController {
     //helper function to check for errors
     private List<String> validateStock(Stock stock) {
         List<String> errors = new ArrayList<>();
-        if (stock.getName() == null || stock.getName().trim().isEmpty()) {
+        if (StringUtils.isEmpty(stock.getName())) {
             errors.add("Stock name is required.");
         }
         if (stock.getCurrentPrice() < 0) {
@@ -116,6 +127,7 @@ public class StockController {
                     @ApiResponse(description = "Error updating stock", responseCode = "404")
             })
     public ResponseEntity<Stock> updateStock(@RequestBody Stock stock) {
+
         if (stock == null || stock.getTicker() == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
@@ -141,8 +153,13 @@ public class StockController {
                     @ApiResponse(description = "Error deleting stock", responseCode = "404")
             })
     public ResponseEntity<Void> deleteStock(@PathVariable String ticker) {
-        stockService.deleteStock(ticker);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        try {
+            stockService.deleteStock(ticker);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        } catch(Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
     }
     //read documentation of rest parameter
     @GetMapping("/sort")
@@ -155,6 +172,11 @@ public class StockController {
                     @ApiResponse(description = "Error sorting by attribute", responseCode = "404")
             })
     public ResponseEntity<List<Stock>> sortStocks(@RequestParam String attribute) {
+        // List of valid attributes that you can sort by
+        List<String> validAttributes = Arrays.asList("name", "currentPrice", "purchasePrice", "quantity");
+        if (!validAttributes.contains(attribute)) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
         try {
             List<Stock> sortedStocks = stockService.sortByAttribute(attribute);
             if (sortedStocks.isEmpty()) {
@@ -165,23 +187,23 @@ public class StockController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
-    @GetMapping("/search/{ticker}")  // this one is redundant to be changed to name.
-    @Operation(summary = "Searches for a stock by its ticker symbol.", description = "This function is crucial for" +
-            " users looking to quickly find detailed information about a specific stock, including its current price," +
-            " quantity owned, and purchase price.",
-            responses = {
-                    @ApiResponse(description = "Filter successful", responseCode = "200",
-                            content = @Content(schema = @Schema(implementation = Stock.class))),
-                    @ApiResponse(description = "Filter unsuccessful", responseCode = "404")
-            })
-    public ResponseEntity<Stock> searchStockByTicker(@PathVariable String ticker) {
-        Stock stock = stockService.searchByTicker(stockService.getAllStocks(), ticker);
-        if (stock != null) {
-            return ResponseEntity.ok(stock);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
-    }
+//    @GetMapping("/search/{ticker}")  // this one is redundant to be changed to name.
+//    @Operation(summary = "Searches for a stock by its ticker symbol.", description = "This function is crucial for" +
+//            " users looking to quickly find detailed information about a specific stock, including its current price," +
+//            " quantity owned, and purchase price.",
+//            responses = {
+//                    @ApiResponse(description = "Filter successful", responseCode = "200",
+//                            content = @Content(schema = @Schema(implementation = Stock.class))),
+//                    @ApiResponse(description = "Filter unsuccessful", responseCode = "404")
+//            })
+//    public ResponseEntity<Stock> searchStockByTicker(@PathVariable String ticker) {
+//        Stock stock = stockService.searchByTicker(stockService.getAllStocks(), ticker);
+//        if (stock != null) {
+//            return ResponseEntity.ok(stock);
+//        } else {
+//            return ResponseEntity.notFound().build();
+//        }
+//    }
 
     @GetMapping("/searchBySector/{sector}")
     @Operation(summary = "Filters stocks by their sector", description = "This endpoint is designed for users" +
