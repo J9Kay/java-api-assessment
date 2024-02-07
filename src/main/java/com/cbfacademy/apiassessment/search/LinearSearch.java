@@ -30,14 +30,26 @@ public class LinearSearch implements Search {
         return null; // Stock not found
     }
 
+    /**
+     * Searches the given list of stocks for stocks in the specified sector.
+     *
+     * @param stocks The list of stocks to search through.
+     * @param sector The sector to filter the stocks by.
+     * @return A list of stocks that belong to the specified sector.
+     */
     @Override
+    //Searches through a list of Stock objects for a stock that has a name matching the target sector
     public List<Stock> searchBySector(List<Stock> stocks, String sector) {
+        //create an Array list to store any results
         List<Stock> foundStocks = new ArrayList<>();
+        // for - each loop to iterate over each stock object in the List<Stock>
         for (Stock stock : stocks) {
+            // the search is case-insensitive as indicated by the use of equalsIgnoreCase
             if (stock.getSector().equalsIgnoreCase(sector)) {
+                //if a matching sector is found in the stock object is it is added to the array list
                 foundStocks.add(stock);
             }
         }
-        return foundStocks;
+        return foundStocks; // List of Stock with matching sector found
     }
 }
