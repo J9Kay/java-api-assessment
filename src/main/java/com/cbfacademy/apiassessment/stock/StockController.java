@@ -315,12 +315,15 @@ public class StockController {
                             content = @Content(schema = @Schema(implementation = Stock.class))),
                     @ApiResponse(description = "Filter unsuccessful", responseCode = "404")
             })
-    public ResponseEntity<List<Stock>> searchStockBySector(@PathVariable String sector) {
+    public ResponseEntity<?> searchStockBySector(@PathVariable String sector) {
         List<Stock> stocks = stockService.searchBySector(sector);
-        if (!stocks.isEmpty()) {
-            return ResponseEntity.ok(stocks);
-        } else {
-            return ResponseEntity.notFound().build();
+        if (stocks.isEmpty()) {
+            // Instead of treating it as an error, return a 200 OK with a message or empty list
+            return ResponseEntity.ok(Map.of("message", "No stocks found for sector: " + sector));
         }
+        return ResponseEntity.ok(stocks);
     }
+
+
+
 }

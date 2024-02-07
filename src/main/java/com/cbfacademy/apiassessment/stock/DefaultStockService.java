@@ -243,7 +243,6 @@ public class DefaultStockService implements StockService {
 
         List<Stock> stocksInSector = search.searchBySector(allStocks, sector);
         if (stocksInSector.isEmpty()) {
-            throw new StockNotFoundException("No stocks found for sector: " + sector);
         }
         return stocksInSector;
     }

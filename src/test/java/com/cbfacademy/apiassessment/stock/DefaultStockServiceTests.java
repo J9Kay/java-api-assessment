@@ -313,11 +313,11 @@ class DefaultStockServiceTests {
         // Define the input sector
         String sector = "NonexistentSector";
 
-        // Assert that the expected exception is thrown
-        StockNotFoundException exception = assertThrows(StockNotFoundException.class, () -> stockService.searchBySector(sector));
+        // Execute the search
+        List<Stock> result = stockService.searchBySector(sector);
 
-        // Assert that the exception message contains the expected message
-        assertTrue(exception.getMessage().contains("No stocks found for sector: " + sector));
+        // Assert that the result is an empty list
+        assertTrue(result.isEmpty(), "Expected an empty list for a nonexistent sector");
     }
 
 }
