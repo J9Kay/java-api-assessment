@@ -216,10 +216,10 @@ public class DefaultStockService implements StockService {
     @Override
     public Stock searchByName(List<Stock> stocks, String targetName) {
         try {
-            return search.searchByName(stocks, targetName);
+            return search.searchByName(stockRepository.retrieveAll(), targetName);
         } catch (Exception e) {
-            log.error("Error searching stock by ticker: {}", targetName, e);
-            throw new PersistenceException("Failed to search stock by ticker", e);
+            log.error("Error searching stock by name: {}", targetName, e);
+            throw new PersistenceException("Failed to search stock by name", e);
         }
     }
 
@@ -233,13 +233,20 @@ public class DefaultStockService implements StockService {
 
     @Override
     public List<Stock> searchBySector(String sector) {
+        List<Stock> allStocks;
         try {
-            List<Stock> allStocks = getAllStocks();
-            return search.searchBySector(allStocks, sector);
+            allStocks = getAllStocks();
         } catch (Exception e) {
-            log.error("Error searching stocks by sector: {}", sector, e);
-            throw new PersistenceException("Failed to search stocks by sector", e);
+            log.error("Error retrieving all stocks", e);
+            throw new PersistenceException("Failed to retrieve all stocks", e);
         }
+
+        List<Stock> stocksInSector = search.searchBySector(allStocks, sector);
+        if (stocksInSector.isEmpty()) {
+            throw new StockNotFoundException("No stocks found for sector: " + sector);
+        }
+        return stocksInSector;
     }
+
 
 }
