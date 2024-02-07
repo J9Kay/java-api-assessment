@@ -15,16 +15,58 @@ import java.util.List;
  */
 @Service
 public class DefaultStockService implements StockService {
+    /**
+     * log is a private static final Logger variable. It is used for logging messages and events in the DefaultStockService class.
+     *
+     * The LoggerFactory.getLogger(DefaultStockService.class) method returns an instance of the Logger class, which is used to perform logging operations.
+     * The getLogger() method takes the class name DefaultStockService.class as its argument and returns a Logger instance with the specified name.
+     *
+     * The log variable is declared as private, which means it can only be accessed within the same class (DefaultStockService).
+     * The static modifier indicates that the log variable belongs to the class itself, not to an instance of the class.
+     * The final modifier indicates that the log variable cannot be reassigned once it is initialized.
+     *
+     * Example usage:
+     * log.debug("This is a debug message");
+     * log.info("This is an info message");
+     * log.warn("This is a warning message");
+     * log.error("This is an error message");
+     */
     private static final Logger log = LoggerFactory.getLogger(DefaultStockService.class);
 
+    /**
+     * The stockRepository variable represents a repository for managing stocks in the system.
+     * It is of type StockRepository, which is an interface that defines the operations for managing Stocks.
+     * The StockRepository interface provides methods for retrieving, saving, updating, and deleting Stock records.
+     * This variable is declared as private final, indicating that it is a constant field and cannot be modified once
+     * initialized.
+     */
+
     private final StockRepository stockRepository;
+
+    /**
+     * The Search interface provides methods to search for stocks based on different criteria.
+     */
     private final Search search;
 
+    /**
+     * The DefaultStockService class is a implementation of the StockService interface.
+     * It provides methods for managing stocks in the system.
+     *
+     * @param stockRepository The repository for managing stocks.
+     * @param search The search interface used for searching stocks.
+     */
     @Autowired
     public DefaultStockService(StockRepository stockRepository, Search search) {
         this.stockRepository = stockRepository;
         this.search = search;
     }
+
+    /**
+     * Retrieve a list of all Stocks.
+     *
+     * @return A list of all Stocks.
+     * @throws Exception if there is an error while retrieving the stocks.
+     */
 
     @Override
     public List<Stock> getAllStocks() {
@@ -32,9 +74,17 @@ public class DefaultStockService implements StockService {
             return stockRepository.retrieveAll();
         } catch (Exception e) {
             log.error("Failed to retrieve all stocks", e);
-            throw e; // Re-throw the exception or handle it as needed
+            throw e;
         }
     }
+
+    /**
+     * Retrieves a stock by its ticker.
+     *
+     * @param ticker The ticker of the stock to retrieve.
+     * @return The stock with the specified ticker, or null if not found.
+     * @throws Exception if there is an error while retrieving the stock.
+     */
 
     @Override
     public Stock getStockByTicker(String ticker) {
@@ -42,9 +92,18 @@ public class DefaultStockService implements StockService {
             return stockRepository.findById(ticker);
         } catch (Exception e) {
             log.error("Failed to find stock with ticker: {}", ticker, e);
-            throw e; // Re-throw the exception or handle it as needed
+            throw e;
         }
     }
+
+    /**
+     * Saves the given Stock object in the repository.
+     *
+     * @param stock The Stock object to create.
+     * @return The saved Stock object.
+     * @throws DuplicateStockException if the stock with the same ticker already exists in the repository.
+     * @throws PersistenceException if there is an error while saving the stock.
+     */
 
     @Override
     public Stock saveStock(Stock stock) {
@@ -69,6 +128,16 @@ public class DefaultStockService implements StockService {
         }
     }
 
+    /**
+     * Updates the stock in the system with the provided updatedStock object.
+     *
+     * @param updatedStock The updated Stock object.
+     * @return The updated Stock object.
+     * @throws IllegalArgumentException If the updatedStock parameter is null or if the ticker of updatedStock is null.
+     * @throws StockNotFoundException If the stock with the specified ticker is not found in the system.
+     * @throws PersistenceException If there is an error while updating the stock in the system.
+     */
+
 
 
     @Override
@@ -92,6 +161,14 @@ public class DefaultStockService implements StockService {
         }
     }
 
+    /**
+     * Deletes a stock from the system based on its ticker.
+     *
+     * @param ticker The ticker of the stock to delete.
+     * @throws StockNotFoundException If the stock with the specified ticker is not found in the system.
+     * @throws PersistenceException If there is an error while deleting the stock from the system.
+     */
+
 
 
     public void deleteStock(String ticker) {
@@ -109,6 +186,14 @@ public class DefaultStockService implements StockService {
         }
     }
 
+    /**
+     * Sorts the stocks based on the specified attribute.
+     *
+     * @param attribute The attribute by which to sort the stocks.
+     * @return A list of sorted stocks.
+     * @throws PersistenceException If there is an error while sorting the stocks.
+     */
+
     @Override
     public List<Stock> sortByAttribute(String attribute) {
         try {
@@ -119,6 +204,15 @@ public class DefaultStockService implements StockService {
         }
     }
 
+    /**
+     * Searches for a stock by name in a given list of stocks.
+     *
+     * @param stocks The list of stocks to search in.
+     * @param targetName The name of the stock to search for.
+     * @return The found stock with the specified name, or null if not found.
+     * @throws PersistenceException If there is an error while searching for the stock.
+     */
+
     @Override
     public Stock searchByName(List<Stock> stocks, String targetName) {
         try {
@@ -128,6 +222,14 @@ public class DefaultStockService implements StockService {
             throw new PersistenceException("Failed to search stock by ticker", e);
         }
     }
+
+    /**
+     * Search for stocks by sector.
+     *
+     * @param sector The sector to search for.
+     * @return A list of stocks that belong to the specified sector.
+     * @throws PersistenceException If there is an error while searching for stocks by sector.
+     */
 
     @Override
     public List<Stock> searchBySector(String sector) {
