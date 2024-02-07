@@ -12,13 +12,13 @@ public class LinearSearch implements Search {
      * Performs a linear search to find a Stock by its ticker.
      *
      * @param stocks The list of Stock objects to search through.
-     * @param targetTicker The ticker symbol of the Stock to find.
+     * @param targetName The ticker symbol of the Stock to find.
      * @return The Stock object with the matching ticker, or null if not found.
      */
     @Override
-    public Stock searchByTicker(List<Stock> stocks, String targetTicker) {
+    public Stock searchByName(List<Stock> stocks, String targetName) {
         for (Stock stock : stocks) {
-            if (stock.getTicker().equalsIgnoreCase(targetTicker)) {
+            if (stock.getTicker().equalsIgnoreCase(targetName)) {
                 return stock; // Stock with matching ticker found
             }
         }

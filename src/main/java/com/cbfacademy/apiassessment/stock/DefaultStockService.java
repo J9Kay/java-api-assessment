@@ -120,11 +120,11 @@ public class DefaultStockService implements StockService {
     }
 
     @Override
-    public Stock searchByTicker(List<Stock> stocks, String targetTicker) {
+    public Stock searchByName(List<Stock> stocks, String targetName) {
         try {
-            return search.searchByTicker(stocks, targetTicker);
+            return search.searchByName(stocks, targetName);
         } catch (Exception e) {
-            log.error("Error searching stock by ticker: {}", targetTicker, e);
+            log.error("Error searching stock by ticker: {}", targetName, e);
             throw new PersistenceException("Failed to search stock by ticker", e);
         }
     }

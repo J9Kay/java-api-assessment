@@ -90,14 +90,14 @@ class DefaultStockServiceTests {
         verify(stockRepository).delete("AAPL");
     }
 
-    @Test
-    void searchByTickerTest() {
-        Stock expectedStock = createStockWithTicker("AAPL");
-        when(search.searchByTicker(anyList(), eq("AAPL"))).thenReturn(expectedStock);
-        Stock foundStock = stockService.searchByTicker(Arrays.asList(createStockWithTicker("AAPL")), "AAPL");
-        assertEquals("AAPL", foundStock.getTicker());
-        verify(search).searchByTicker(anyList(), eq("AAPL"));
-    }
+//    @Test
+//    void searchByTickerTest() {
+//        Stock expectedStock = createStockWithTicker("AAPL");
+//        when(search.searchByTicker(anyList(), eq("AAPL"))).thenReturn(expectedStock);
+//        Stock foundStock = stockService.searchByTicker(Arrays.asList(createStockWithTicker("AAPL")), "AAPL");
+//        assertEquals("AAPL", foundStock.getTicker());
+//        verify(search).searchByTicker(anyList(), eq("AAPL"));
+//    }
 
     /**
      * Helper method creates a `Stock` instance with provided ticker

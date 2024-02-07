@@ -52,7 +52,7 @@ public interface StockService {
      */
     List<Stock> sortByAttribute(String attribute);
 
-    Stock searchByTicker(List<Stock> stocks, String targetTicker);
+    Stock searchByName(List<Stock> stocks, String targetName);
     //validate the valude being sorted is one that can be sorted by
 
 

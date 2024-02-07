@@ -81,9 +81,10 @@ public class StockController {
 
             })
     public ResponseEntity<Object> saveStock(@RequestBody Stock stock) {
-        if (stockService.searchByTicker(stockService.getAllStocks(), stock.getTicker()) != null) {
-        return new ResponseEntity<>(Map.of("error", "Stock with ticker " + stock.getTicker() + " already exists."), HttpStatus.BAD_REQUEST);
-    }
+        if (stockService.getStockByTicker(stock.getTicker()) != null) {
+            return new ResponseEntity<>(Map.of("error", "Stock with ticker " + stock.getTicker() +
+                    " already exists."), HttpStatus.BAD_REQUEST); // changed this
+        }
         List<String> validationErrors = validateStock(stock);
         if (!validationErrors.isEmpty()) {
             return new ResponseEntity<>(Map.of("errors", validationErrors), HttpStatus.BAD_REQUEST);
