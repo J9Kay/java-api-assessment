@@ -26,6 +26,15 @@ public interface Repository<T, ID extends Serializable> {
      * @return the found entity, or null if no such entity exists
      */
     T findById(ID id);
+
+    /**
+     * Saves the given entity in the repository.
+     *
+     * @param entity the entity to save
+     * @return the saved entity
+     * @throws IllegalArgumentException if the argument is not valid
+     * @throws PersistenceException if there is an issue with the persistence layer
+     */
     T save(T entity) throws IllegalArgumentException, PersistenceException;
 
     /**
