@@ -301,10 +301,9 @@ class DefaultStockServiceTests {
     }
 
     /**
-     * This method tests the scenario where no stocks are found for the specified sector.
-     * It verifies that a StockNotFoundException is thrown and the correct error message is displayed.
-     *
-     * @throws StockNotFoundException If no stocks are found for the specified sector.
+     * This method tests the behavior of the searchBySector method in the StockService class
+     * when the specified sector does not exist. It verifies that an empty list is returned,
+     * indicating that no stocks were found in the nonexistent sector.
      */
 
 
