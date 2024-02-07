@@ -69,7 +69,7 @@ public class JsonStockRepository implements StockRepository {
     /**
      * The JsonStockRepository class is responsible for managing stock data using JSON files as the data source.
      * It implements the StockRepository interface and provides methods for retrieving, saving, updating, and deleting
-     * stock records.
+     * stock records. The filepath is injected from application properties.
      */
     public JsonStockRepository(@Value("${json.file.path}") String filepath, ResourceLoader resourceLoader) {
         this.filepath = filepath;
