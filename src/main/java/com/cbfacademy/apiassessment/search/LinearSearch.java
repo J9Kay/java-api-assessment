@@ -16,12 +16,17 @@ public class LinearSearch implements Search {
      * @return The Stock object with the matching ticker, or null if not found.
      */
     @Override
+    //Searches through a list of Stock objects for a stock that has a name matching the target name
     public Stock searchByName(List<Stock> stocks, String targetName) {
+        // for - each loop to iterate over each stock object in the List<Stock>
         for (Stock stock : stocks) {
-            if (stock.getTicker().equalsIgnoreCase(targetName)) {
+            // the search is case-insensitive as indicated by the use of equalsIgnoreCase
+            if (stock.getName().equalsIgnoreCase(targetName)) {
+                //if a matching stock is found return immediately
                 return stock; // Stock with matching ticker found
             }
         }
+        // if no matching stock is found after iterating over the enter list return null
         return null; // Stock not found
     }
 

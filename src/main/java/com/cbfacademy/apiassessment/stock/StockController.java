@@ -83,7 +83,7 @@ public class StockController {
     public ResponseEntity<Object> saveStock(@RequestBody Stock stock) {
         if (stockService.getStockByTicker(stock.getTicker()) != null) {
             return new ResponseEntity<>(Map.of("error", "Stock with ticker " + stock.getTicker() +
-                    " already exists."), HttpStatus.BAD_REQUEST); // changed this
+                    " already exists."), HttpStatus.BAD_REQUEST);
         }
         List<String> validationErrors = validateStock(stock);
         if (!validationErrors.isEmpty()) {
@@ -194,23 +194,22 @@ public class StockController {
             return new ResponseEntity<>("Error sorting by attribute", HttpStatus.BAD_REQUEST);
         }
     }
-//    @GetMapping("/search/{ticker}")  // this one is redundant to be changed to name.
-//    @Operation(summary = "Searches for a stock by its ticker symbol.", description = "This function is crucial for" +
-//            " users looking to quickly find detailed information about a specific stock, including its current price," +
-//            " quantity owned, and purchase price.",
-//            responses = {
-//                    @ApiResponse(description = "Filter successful", responseCode = "200",
-//                            content = @Content(schema = @Schema(implementation = Stock.class))),
-//                    @ApiResponse(description = "Filter unsuccessful", responseCode = "404")
-//            })
-//    public ResponseEntity<Stock> searchStockByTicker(@PathVariable String ticker) {
-//        Stock stock = stockService.searchByTicker(stockService.getAllStocks(), ticker);
-//        if (stock != null) {
-//            return ResponseEntity.ok(stock);
-//        } else {
-//            return ResponseEntity.notFound().build();
-//        }
-//    }
+    @GetMapping("/search/{name}")
+    @Operation(summary = "Searches for a stock by its name.", description = "This function is crucial for" +
+            " users looking to quickly find a specific stock",
+            responses = {
+                    @ApiResponse(description = "Filter successful", responseCode = "200",
+                            content = @Content(schema = @Schema(implementation = Stock.class))),
+                    @ApiResponse(description = "Filter unsuccessful", responseCode = "404")
+            })
+    public ResponseEntity<Stock> searchStockByName(@PathVariable String name) {
+        Stock stock = stockService.searchByName(stockService.getAllStocks(), name);
+        if (stock != null) {
+            return ResponseEntity.ok(stock);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
 
     @GetMapping("/searchBySector/{sector}")
     @Operation(summary = "Filters stocks by their sector", description = "This endpoint is designed for users" +
