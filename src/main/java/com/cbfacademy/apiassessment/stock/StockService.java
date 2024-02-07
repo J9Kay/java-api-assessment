@@ -52,10 +52,21 @@ public interface StockService {
      */
     List<Stock> sortByAttribute(String attribute);
 
+    /**
+     * Retrieves a stock by its name from the given list of stocks.
+     *
+     * @param stocks The list of stocks to search.
+     * @param targetName The name of the stock to search for.
+     * @return The stock with the specified name, or null if not found.
+     */
     Stock searchByName(List<Stock> stocks, String targetName);
-    //validate the valude being sorted is one that can be sorted by
 
-
+    /**
+     * Searches for stocks by their sector.
+     *
+     * @param sector The sector of the stocks to search for.
+     * @return A list of {@link Stock} objects matching the sector.
+     */
     List<Stock> searchBySector(String sector);
 
 

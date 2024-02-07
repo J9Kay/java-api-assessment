@@ -244,10 +244,11 @@ public class JsonStockRepository implements StockRepository {
      *
      * @param sector the name of the sector of the stock
      * @return a list of Stocks that match the sector name
+     * currently using the linear search algorithm to provide this feature
      */
 
     @Override
-    public List<Stock> searchBySector(String sector) {
+    public List<Stock> searchBySector(String sector) { //review this
         if (sector == null || database == null) {
             return Collections.emptyList(); // or throw an exception, based on your use case
         }
