@@ -25,12 +25,29 @@ import java.util.Map;
 @Tag(name = "Stocks")
 public class StockController {
 
+    /**
+     * The stockService variable represents an instance of the StockService interface, which provides methods for managing stocks.
+     */
+
     private final StockService stockService;
+
+    /**
+     * The StockController class is responsible for handling HTTP requests related to managing stocks.
+     */
 
     @Autowired
     public StockController(StockService stockService) {
         this.stockService = stockService;
     }
+
+    /**
+     * Retrieves a list of all stocks available in the system.
+     *
+     * @return ResponseEntity object containing the list of stocks
+     *         - HttpStatus.OK (200): Successful retrieval
+     *         - HttpStatus.NO_CONTENT (204): No stocks found
+     *         - HttpStatus.INTERNAL_SERVER_ERROR (500): Error occurred during retrieval
+     */
 
 
     @GetMapping
@@ -41,6 +58,7 @@ public class StockController {
                     @ApiResponse(description = "No stocks found", responseCode = "404")
             })
     public ResponseEntity<List<Stock>> getAllStocks() {
+        //try and catch block to check that the stock object is not empty and handle and exceptions
 
             try {
                 List<Stock> stocks = stockService.getAllStocks();
@@ -54,6 +72,15 @@ public class StockController {
 
     }
 
+    /**
+     * Retrieves a stock by its ticker symbol.
+     *
+     * @param ticker The ticker symbol of the stock to retrieve.
+     * @return ResponseEntity object containing the retrieved stock.
+     *         Returns HttpStatus.OK (200) upon successful retrieval.
+     *         Returns HttpStatus.NOT_FOUND (404) if the stock is not found.
+     */
+
 
     @GetMapping("/{ticker}")
     @Operation(summary = "Retrieve a stock", description = "Retrieves a stock available in the system",
@@ -64,12 +91,25 @@ public class StockController {
             })
     public ResponseEntity<Stock> getStockByTicker(@PathVariable String ticker) {
         Stock stock = stockService.getStockByTicker(ticker);
+        //check if stock is in system
         if (stock == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(stock, HttpStatus.OK);
     }
-//a
+
+    /**
+     * Saves a stock or stocks to the system.
+     *
+     * @param stock The stock or stocks to be saved.
+     * @return ResponseEntity object containing the saved stock or an error message.
+     *         Returns HttpStatus.CREATED (201) if the stock is successfully saved.
+     *         Returns HttpStatus.BAD_REQUEST (400) if the stock with the same ticker already exists
+     *         or if there are validation errors in the stock data.
+     *         Returns HttpStatus.NOT_FOUND (404) if there is an error adding the stock.
+     *         Returns HttpStatus.INTERNAL_SERVER_ERROR (500) if an unexpected error occurs while saving the stock.
+     */
+
     @PostMapping
     @Operation(summary = "Add a stock or stocks", description = "Add a stock or stocks to the system",
             responses = {
@@ -80,6 +120,7 @@ public class StockController {
                     @ApiResponse(description = "Internal server error", responseCode = "500")
 
             })
+
     public ResponseEntity<Object> saveStock(@RequestBody Stock stock) {
         if (stockService.getStockByTicker(stock.getTicker()) != null) {
             return new ResponseEntity<>(Map.of("error", "Stock with ticker " + stock.getTicker() +
@@ -98,6 +139,13 @@ public class StockController {
             return new ResponseEntity<>(Map.of("error", "An unexpected error occurred while saving the stock. Error: "+e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    /**
+     * This method validates the stock data and checks for any errors.
+     *
+     * @param stock The stock to be validated.
+     * @return A list of error messages. Returns an empty list if no errors are found.
+     */
 
     //helper function to check for errors
     private List<String> validateStock(Stock stock) {
@@ -119,6 +167,16 @@ public class StockController {
     }
 
 
+    /**
+     * Updates the information of an existing stock in the system.
+     *
+     * @param stock The Stock object containing the updated information.
+     * @return ResponseEntity object containing the updated stock or an error message.
+     *         Returns HttpStatus.OK (200) if the stock is successfully updated.
+     *         Returns HttpStatus.NOT_FOUND (404) if the stock is not found.
+     *         Returns HttpStatus.BAD_REQUEST (400) if the stock or its ticker is null.
+     *         Returns HttpStatus.INTERNAL_SERVER_ERROR (500) if an unexpected error occurs.
+     */
 
     @PutMapping("/{ticker}")
     @Operation(summary = "Update stock information", description = "Update information on an existing stock available in the system",
@@ -146,6 +204,16 @@ public class StockController {
 
     }
 
+    /**
+     * Deletes a stock from the system based on the given ticker symbol.
+     *
+     * @param ticker The ticker symbol of the stock to be deleted.
+     * @return A ResponseEntity object.
+     *         Returns HttpStatus.NO_CONTENT (204) upon successful deletion.
+     *         Returns HttpStatus.NOT_FOUND (404) if the stock to be deleted does not exist.
+     *         Returns HttpStatus.INTERNAL_SERVER_ERROR (500) if an unexpected error occurs.
+     */
+
     @DeleteMapping("/{ticker}")
     @Operation(summary = "Delete a stock", description = "Delete a stock available in the system",
             responses = {
@@ -167,7 +235,17 @@ public class StockController {
         }
 
     }
-    //read documentation of rest parameter
+
+    /**
+     * Sorts stocks based on a specified attribute.
+     *
+     * @param attribute The attribute by which to sort the stocks. Valid attributes are: name, currentPrice,
+     *                  purchasePrice, quantity.
+     * @return A ResponseEntity object containing the sorted stocks. Returns HttpStatus.OK (200) if the sorting
+     *         is successful. Returns HttpStatus.BAD_REQUEST (400) if the attribute is not valid or if there
+     *         is an error sorting the stocks. Returns HttpStatus.NO_CONTENT (204) if no stocks are found.
+     *         Returns HttpStatus.INTERNAL_SERVER_ERROR (500) if an unexpected error occurs.
+     */
     @GetMapping("/sort")
     @Operation(summary = "Sort stock based on a specified attribute", description = "This endpoint allows users to," +
             " organize their stock view according to various stock attributes such as name, price, or quantity." +
@@ -194,6 +272,15 @@ public class StockController {
             return new ResponseEntity<>("Error sorting by attribute", HttpStatus.BAD_REQUEST);
         }
     }
+
+    /**
+     * Searches for a stock by its name.
+     *
+     * @param name The name of the stock to search for.
+     * @return A ResponseEntity object containing the found stock.
+     *         Returns HttpStatus.OK (200) if the stock is found.
+     *         Returns HttpStatus.NOT_FOUND (404) if the stock is not found.
+     */
     @GetMapping("/search/{name}")
     @Operation(summary = "Searches for a stock by its name.", description = "This function is crucial for" +
             " users looking to quickly find a specific stock",
@@ -210,6 +297,15 @@ public class StockController {
             return ResponseEntity.notFound().build();
         }
     }
+
+    /**
+     * Searches for stocks by their sector.
+     *
+     * @param sector The sector of the stocks to search for.
+     * @return A ResponseEntity object containing a list of stocks matching the sector.
+     *         Returns HttpStatus.OK (200) if the search is successful and stocks are found.
+     *         Returns HttpStatus.NOT_FOUND (404) if no stocks are found for the sector.
+     */
 
     @GetMapping("/searchBySector/{sector}")
     @Operation(summary = "Filters stocks by their sector", description = "This endpoint is designed for users" +
