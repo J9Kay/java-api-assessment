@@ -20,9 +20,10 @@ It implements a StockRepository using JSON file storage allowing for seamless da
         - [Building and Running the API](#building-and-running-the-api)
         - [Running tests](#running-tests)
 2. [Deployment](#deployment)
-3. [Versioning](#versioning)
-4. [Authors](#authors)
-5. [License](#license)
+3. [Responses](#responses)
+4. [Versioning](#versioning)
+5. [Authors](#authors)
+6. [License](#license)
 
 ## Development Setup
 
