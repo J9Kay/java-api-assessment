@@ -74,8 +74,7 @@ bash
  ```
 
 The tests have passed when you have received the following report:
-
-![Screenshot 2024-02-18 at 19.14.46.png](..%2F..%2FScreenshot%202024-02-18%20at%2019.14.46.png)
+![img_3.png](img_3.png)
 
 
 You can test your endpoints using Postman or your preferred REST client.
