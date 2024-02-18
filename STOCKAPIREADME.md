@@ -1,7 +1,10 @@
 # StockAPI
 
-The StockAPI provides real-time stock market data. It enables developers to get stock quotes, historical prices,
-dividends, and other important investment details.
+The StockAPI provides a tool for users track all their stock portfolop in one place. It enable users to:
+
+1) get stock data, including currentPrice, purchasePrice and quanity.
+2) use sector based search for targeted financial analysis.
+3) Add, delete, update and view your entire stock portfolio with ease.
 
 ## Table of Contents
 
@@ -52,7 +55,9 @@ We follow the Google Java Style guide in this project. Please install the style 
 #### Building and Running the API
 
 The API can locally be built and run using Maven's wrapper commands:
-bash ./mvnw clean install
+```bash 
+./mvnw clean install
+```
 This will take care of downloading dependencies, compiling source code and running unit tests.
 
 #### Running Tests
