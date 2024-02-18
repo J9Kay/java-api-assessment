@@ -1,12 +1,12 @@
 # StockAPI
 
-The StockAPI provides a tool for users track all their stock portfolop in one place. 
-It implements are stockrepository using JSON file storage allowing for seamless data persistence. It enables users to:
+The StockAPI provides a tool for users track all their stock portfolio in one place. 
+It implements a StockRepository using JSON file storage allowing for seamless data persistence. It enables users to:
 
-1) get stock data, including currentPrice, purchasePrice and quanity.
-2) use sector based search enhancing usability and effiiency in retrieving relevant stock information.
+1) get stock data, including currentPrice, purchasePrice and quantity the stock.
+2) use sector based search enhancing usability and efficiency in retrieving relevant stock information.
 3) Add, delete, update and view your entire stock portfolio with ease.
-4) Incoporates exception handling to gracefully manage error and ensure reliability of the application.
+4) Incorporates exception handling to gracefully manage error and ensure reliability of the application.
 
 
 
@@ -37,7 +37,7 @@ Ensure that you have the following tools installed in your development setup:
 - Maven
 - Visual Studio Code:  
   1) Extension Pack for Java,
-  2) Sprint Boot Exntesion Pack
+  2) Sprint Boot Extension Pack
 - Alternative to Visual Studio Code is IntelliJ
 - Postman or Swagger or other RESTful API testing tool.
 
@@ -63,6 +63,8 @@ bash
 ```
 This will take care of downloading dependencies, compiling source code and running unit tests.
 
+![img_2.png](img_2.png)
+
 #### Running Tests
 
 We use JUnit tests for unit testing. Run them with the following command:
@@ -73,12 +75,44 @@ bash
 
 The tests have passed when you have received the following report:
 
+![Screenshot 2024-02-18 at 19.14.46.png](..%2F..%2FScreenshot%202024-02-18%20at%2019.14.46.png)
 
+
+You can test your endpoints using Postman or your preferred REST client.
+
+For POST and PUT requests, you'll need to provide a request body in JSON format, e.g.:
+```
+    {
+        "ticker": "AAA",
+        "name": "Apple",
+        "currencySymbol": "$",
+        "sector": "Technology",
+        "currentPrice": 130.75,
+        "quantity": 10,
+        "purchasePrice": 120.5
+    }
+
+```
+![img_1.png](img_1.png)
 
 
 ## Deployment
 
 You should see console output similar to the following (press command + C to exit):
+![img.png](img.png)
+
+## Responses
+
+Status Codes
+
+| Status Code | Description           | 
+|-------------|-----------------------|
+| 200         | OK                    | 
+| 201         | Created               | 
+| 404         | Not Found             |
+| 500         | Internal Server Error |
+
+
 
 
 ## Versioning
