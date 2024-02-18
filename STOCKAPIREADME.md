@@ -1,10 +1,14 @@
 # StockAPI
 
-The StockAPI provides a tool for users track all their stock portfolop in one place. It enable users to:
+The StockAPI provides a tool for users track all their stock portfolop in one place. 
+It implements are stockrepository using JSON file storage allowing for seamless data persistence. It enables users to:
 
 1) get stock data, including currentPrice, purchasePrice and quanity.
-2) use sector based search for targeted financial analysis.
+2) use sector based search enhancing usability and effiiency in retrieving relevant stock information.
 3) Add, delete, update and view your entire stock portfolio with ease.
+4) Incoporates exception handling to gracefully manage error and ensure reliability of the application.
+
+
 
 ## Table of Contents
 
@@ -12,9 +16,7 @@ The StockAPI provides a tool for users track all their stock portfolop in one pl
     - [Prerequisites](#prerequisites)
     - [GitHub Instructions](#github-instructions)
         - [Cloning the Repository](#cloning-the-repository)
-        - [Contributions](#contributions)
     - [Local Development](#local-development)
-        - [Code Style](#code-style)
         - [Building and Running the API](#building-and-running-the-api)
         - [Running tests](#running-tests)
 2. [Deployment](#deployment)
@@ -29,45 +31,55 @@ The StockAPI provides a tool for users track all their stock portfolop in one pl
 Ensure that you have the following tools installed in your development setup:
 
 - Java: `JDK 17`
-- Docker (for running the database locally): `version XX.XX`
+- Git
+- Springboot
+- Jackson
+- Maven
+- Visual Studio Code:  
+  1) Extension Pack for Java,
+  2) Sprint Boot Exntesion Pack
+- Alternative to Visual Studio Code is IntelliJ
+- Postman or Swagger or other RESTful API testing tool.
 
 ### GitHub Instructions
 
 #### Cloning the Repository
 
-Clone this repository to your local machine to begin contributing:
-bash git clone https://github.com/YOUR-USERNAME/YOUR-REPOSITORY
-Replace 'YOUR-USERNAME' and 'YOUR-REPOSITORY' with the appropriate details.
+Clone this repository to your local machine :
+bash 
+```
+   git clone [REPO_URL]
+   cd [REPO_NAME]
+```
+Replace 'REPO_URL' with the link to your Github repository and 'REPO_NAME' with the repository's name.
 
-#### Contributions
-
-We welcome contributions from community members. Please see the `CONTRIBUTING.md` document for our code of conduct and
-the process for submitting pull requests.
-
-### Local Development
-
-We use IntelliJ IDEA as our preferred IDE for this project. Here's how to get the API running locally.
-
-#### Code Style
-
-We follow the Google Java Style guide in this project. Please install the style guide settings in your IDE.
 
 #### Building and Running the API
 
 The API can locally be built and run using Maven's wrapper commands:
-```bash 
-./mvnw clean install
+```
+bash 
+./mvnw clean dependency:resolve
 ```
 This will take care of downloading dependencies, compiling source code and running unit tests.
 
 #### Running Tests
 
 We use JUnit tests for unit testing. Run them with the following command:
-bash ./mvnw test
+```
+bash
+ ./mvnw test
+ ```
+
+The tests have passed when you have received the following report:
+
+
+
 
 ## Deployment
 
-Detailed instructions on the deployment process of the StockAPI are provided here.
+You should see console output similar to the following (press command + C to exit):
+
 
 ## Versioning
 
@@ -75,10 +87,8 @@ We use Semantic Versioning (SemVer) for versioning. See [SemVer](http://semver.o
 
 ## Authors
 
-This API was developed by Janine, and she is always looking to recognize contributions from
-people just like you.
+This API was developed by Janine.
 
 ## License
 
-The StockAPI is released under XYZ License. This allows others to use and reference our code in their work while
-acknowledging its original source.
+The StockAPI is released under an MIT License.
