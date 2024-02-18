@@ -1,6 +1,6 @@
 # StockAPI
 
-The StockAPI provides a tool for users track all their stock portfolio in one place. 
+The StockAPI provides a tool for users to track all their stock portfolio in one place. 
 It implements a StockRepository using JSON file storage allowing for seamless data persistence. It enables users to:
 
 1) get stock data, including currentPrice, purchasePrice and quantity the stock.
@@ -62,6 +62,11 @@ The API can locally be built and run using Maven's wrapper commands:
 bash 
 ./mvnw clean dependency:resolve
 ```
+```
+bash 
+./mvnw spring-boot:run
+```
+
 This will take care of downloading dependencies, compiling source code and running unit tests.
 
 ![img_2.png](img_2.png)
